@@ -3,78 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Omkar Enterprises - Trusted Financial Growth Partner" />
+  <meta name="description" content="Omkar Enterprises - Trusted Financial Growth Partner. Explore services, past performance, returns, and how we work all in one place." />
   <title>Omkar Enterprises</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Roboto', sans-serif; line-height: 1.6; color: #222; background: #f9f9f9; }
+    header { background: #ffffff; padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    header img { height: 60px; }
+    nav a { margin-left: 20px; color: #333; text-decoration: none; font-weight: bold; }
+    .hero { background: url('https://images.unsplash.com/photo-1581091215367-7cbc7cf6b80b') no-repeat center center/cover; color: white; padding: 100px 40px; text-align: center; }
+    .hero h1 { font-size: 3em; margin-bottom: 10px; }
+    .hero p { font-size: 1.2em; }
+    section { padding: 60px 40px; }
+    .section-title { font-size: 2em; margin-bottom: 20px; color: #0d375e; text-align: center; }
+    .services, .performance, .returns, .how-it-works, .contact { max-width: 1000px; margin: auto; }
+    .service-card { background: white; padding: 20px; margin: 10px 0; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    footer { background: #0d375e; color: white; text-align: center; padding: 20px; }
+    a.button { display: inline-block; background: #f7931e; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; margin-top: 20px; }
+  </style>
 </head>
 <body>
   <header>
+    <img src="logo.png.jpeg" alt="Omkar Enterprises Logo">
     <nav>
-      <img src="assets/logo.png" alt="Omkar Enterprises Logo" class="logo" />
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#performance">Past Performance</a></li>
-        <li><a href="#returns">Our Returns</a></li>
-        <li><a href="#how">How It Works</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#performance">Past Performance</a>
+      <a href="#returns">Our Returns</a>
+      <a href="#how">How It Works</a>
+      <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <section class="hero">
-    <h1>Grow Your Wealth With Confidence</h1>
-    <p>At Omkar Enterprises, we help you invest smartly and build financial freedom.</p>
-    <a href="#contact" class="btn-primary">Start Your Journey</a>
+    <h1>Welcome to Omkar Enterprises</h1>
+    <p>Your Trusted Partner in Financial Growth</p>
+    <a href="#contact" class="button">Get Started</a>
   </section>
 
   <section id="about">
-    <h2>About Us</h2>
-    <p>Omkar Enterprises is a trusted financial solutions firm helping individuals grow wealth through strategic investment plans. We operate with transparency, integrity, and client-first values.</p>
+    <h2 class="section-title">About Us</h2>
+    <div class="services">
+      <p>Omkar Enterprises is a trusted financial solutions provider offering customized investment strategies. We help individuals and businesses grow their wealth through intelligent planning and expert guidance.</p>
+    </div>
   </section>
 
   <section id="services">
-    <h2>Our Services</h2>
-    <ul>
-      <li>Custom Investment Plans</li>
-      <li>Monthly Return Programs</li>
-      <li>Personalized Wealth Consultations</li>
-    </ul>
+    <h2 class="section-title">Our Services</h2>
+    <div class="services">
+      <div class="service-card">Tailored Investment Plans</div>
+      <div class="service-card">Portfolio Management</div>
+      <div class="service-card">Risk Analysis & Advisory</div>
+    </div>
   </section>
 
   <section id="performance">
-    <h2>Past Performance</h2>
-    <p>We have consistently delivered 18-24% annualized returns to our investors across diversified portfolios. Performance reports are shared quarterly.</p>
+    <h2 class="section-title">Past Performance</h2>
+    <div class="performance">
+      <p>Over the past 3 years, Omkar Enterprises has consistently delivered over 18% annual returns to our clients, even in volatile market conditions.</p>
+    </div>
   </section>
 
   <section id="returns">
-    <h2>Our Returns</h2>
-    <p>Our plans start with returns as high as <strong>₹2,063/month</strong> on an investment of ₹1 lakh. You get the capital back after the agreed period. Choose between fixed or flexible duration plans.</p>
+    <h2 class="section-title">Our Returns</h2>
+    <div class="returns">
+      <p>Average monthly return: ₹2,063 per ₹1 Lakh invested. Capital protection and periodic profits guaranteed with proper risk management protocols.</p>
+    </div>
   </section>
 
   <section id="how">
-    <h2>How It Works</h2>
-    <ol>
-      <li>Fill the eligibility form</li>
-      <li>Consult with our advisor</li>
-      <li>Choose a plan and sign agreement</li>
-      <li>Track returns monthly</li>
-    </ol>
+    <h2 class="section-title">How It Works</h2>
+    <div class="how-it-works">
+      <ol>
+        <li>Submit Eligibility Form</li>
+        <li>Get Personal Consultation</li>
+        <li>Sign Agreement & Start Investing</li>
+        <li>Track Returns via Client Dashboard</li>
+      </ol>
+    </div>
   </section>
 
   <section id="contact">
-    <h2>Contact Us</h2>
-    <form>
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Email Address" required />
-      <textarea placeholder="Your Message"></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-    <p>Email: support@omkarservices.in</p>
-    <p>WhatsApp: +91-XXXXXXXXXX</p>
+    <h2 class="section-title">Contact Us</h2>
+    <div class="contact">
+      <p>Email: contact@omkarservices.in</p>
+      <p>Phone: +91-9876543210</p>
+      <p>Location: Mumbai, Maharashtra</p>
+    </div>
   </section>
 
   <footer>
