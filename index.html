@@ -8,27 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', sans-serif; }
-    .whatsapp-float-button {
-      position: fixed;
-      width: 60px;
-      height: 60px;
-      bottom: 20px;
-      right: 20px;
-      background-color: #25D366;
-      color: white;
-      border-radius: 50%;
-      text-align: center;
-      font-size: 30px;
-      box-shadow: 2px 2px 3px #999;
-      z-index: 100;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: transform 0.3s ease-in-out;
-    }
-    .whatsapp-float-button:hover {
-      transform: scale(1.1);
-    }
   </style>
 </head>
 <body class="text-gray-900 bg-white">
@@ -36,7 +15,10 @@
   <!-- NAVIGATION -->
   <header class="fixed w-full bg-white shadow z-50">
     <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-      <h1 class="text-2xl font-bold text-blue-600">Omkar Enterprises</h1>
+      <div class="flex items-center space-x-2">
+        <img src="/logo.png" alt="Logo" class="h-8 w-auto">
+        <h1 class="text-2xl font-bold text-blue-600">Omkar Enterprises</h1>
+      </div>
       <nav class="space-x-4 text-sm font-semibold">
         <a href="#about">About</a>
         <a href="#plans">Plans</a>
@@ -50,6 +32,7 @@
 
   <!-- HERO -->
   <section class="h-screen bg-gradient-to-br from-blue-700 to-blue-500 text-white flex flex-col justify-center items-center text-center px-4 pt-20">
+    <img src="/logo.png" alt="Logo" class="h-16 mb-4">
     <h2 class="text-5xl font-bold mb-4">Build Wealth the Smart Way</h2>
     <p class="text-lg mb-6 max-w-2xl">Join Omkar Enterprises and discover passive income through equity-backed strategies with legal protection and consistent monthly returns.</p>
     <a href="#plans" class="bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold shadow hover:bg-blue-100">Get Started Now</a>
@@ -153,11 +136,6 @@
     <p><a href="#" class="underline">Privacy Policy</a> | <a href="#" class="underline">Legal Documents</a></p>
     <p class="mt-2">© 2025 Omkar Enterprises. All Rights Reserved.</p>
   </section>
-
-  <!-- WhatsApp Floating Button -->
-  <a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float-button" target="_blank" aria-label="Chat on WhatsApp">
-    🟢
-  </a>
 
   <!-- JS CALCULATORS -->
   <script>
