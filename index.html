@@ -1,70 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Omkar Hot Deal Calculator</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="/favicon.ico" />
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-100 text-gray-800 font-sans">  <div class="max-w-5xl mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold text-center text-blue-900 mb-3">🔥 Omkar Hot Deal Calculator</h1>
+    <p class="text-center text-red-600 text-sm mb-8">⚠️ Limited-time promotional opportunity — fixed monthly returns offered by Omkar Enterprises</p><!-- Calculator Card -->
+<div class="bg-white rounded-xl shadow-md p-6 mb-10">
+  <h2 class="text-xl font-semibold mb-4">📈 Calculate Monthly Return</h2>
+  <label class="block mb-1 text-sm font-medium">Enter Investment Amount (₹):</label>
+  <input id="amount" type="number" class="w-full border border-gray-300 rounded p-3 mb-4" placeholder="e.g., 500000" />
 
-  <div class="max-w-4xl mx-auto px-4 py-10">
-    <h1 class="text-3xl font-bold text-center mb-4">🔥 Omkar Hot Deal Calculator</h1>
-    <p class="text-center text-sm text-red-600 mb-6">⚠️ Limited-time opportunity — fixed monthly returns by Omkar Enterprises</p>
+  <button onclick="calculateReturn()" class="bg-blue-700 text-white px-5 py-2 rounded hover:bg-blue-800">Calculate</button>
+  <div id="result" class="mt-4 text-lg font-medium text-green-700"></div>
+</div>
 
-    <!-- Calculator -->
-    <div class="bg-white p-6 rounded-xl shadow-md mb-10">
-      <h2 class="text-xl font-semibold mb-2">📈 Calculate Monthly Return</h2>
-      <label class="block mb-2 text-sm font-medium">Enter Investment Amount (₹):</label>
-      <input id="amount" type="number" class="w-full border rounded p-2 mb-4" placeholder="e.g., 500000" />
-
-      <button onclick="calculateReturn()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Calculate</button>
-
-      <div id="result" class="mt-4 text-lg font-bold"></div>
+<!-- Submission Form -->
+<div class="bg-white rounded-xl shadow-md p-6 mb-10">
+  <h2 class="text-xl font-semibold mb-4">📩 Request Loan Agreement Preview</h2>
+  <form action="https://formspree.io/f/mwkgywqb" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <input type="text" name="name" placeholder="Full Name" required class="border p-3 rounded" />
+    <input type="email" name="email" placeholder="Email Address" required class="border p-3 rounded" />
+    <input type="tel" name="phone" placeholder="Mobile Number" required class="border p-3 rounded" />
+    <input type="number" name="investment" placeholder="Investment Amount (₹)" required class="border p-3 rounded" />
+    <div class="md:col-span-2">
+      <button type="submit" class="w-full bg-green-600 text-white py-3 rounded hover:bg-green-700 transition">📤 Send Request</button>
     </div>
+  </form>
+</div>
 
-    <!-- Rate Slab Table -->
-    <div class="bg-white p-6 rounded-xl shadow-md mb-10">
-      <h2 class="text-xl font-semibold mb-4">💹 Monthly Return Slabs (No Bank Guarantee)</h2>
-      <table class="w-full table-auto border">
-        <thead class="bg-gray-200">
-          <tr>
-            <th class="p-2 text-left">Investment (₹)</th>
-            <th class="p-2 text-left">Rate / Month</th>
-            <th class="p-2 text-left">Return (₹)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td class="p-2">Up to 1,00,000</td><td class="p-2">5%</td><td class="p-2">₹5,000</td></tr>
-          <tr><td class="p-2">2,10,000</td><td class="p-2">6%</td><td class="p-2">₹12,600</td></tr>
-          <tr><td class="p-2">3,10,000</td><td class="p-2">7.5%</td><td class="p-2">₹23,250</td></tr>
-          <tr><td class="p-2">5,00,000</td><td class="p-2">8%</td><td class="p-2">₹40,000</td></tr>
-          <tr><td class="p-2">5.10 – 10 Lakhs</td><td class="p-2">8.5%</td><td class="p-2">₹43,350 – ₹85,000</td></tr>
-          <tr><td class="p-2">10.10 – 25 Lakhs</td><td class="p-2">9%</td><td class="p-2">₹90,900 – ₹2,25,000</td></tr>
-        </tbody>
-      </table>
-    </div>
+<!-- Loan Agreement CTA -->
+<div class="text-center mb-12">
+  <a href="/hotdeal/loan-agreement-preview.html" class="inline-block bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-900 transition">
+    📃 Preview Sample Loan Agreement
+  </a>
+</div>
 
-    <!-- Market Trend -->
-    <div class="bg-white p-6 rounded-xl shadow-md mb-10">
-      <h2 class="text-xl font-semibold mb-4">📉 Projected Rate Timeline (Market Trend)</h2>
-      <ul class="list-disc list-inside text-sm space-y-2">
-        <li><strong>2024:</strong> 5% promotional opportunity</li>
-        <li><strong>2025:</strong> Expected 6% – 8%</li>
-        <li><strong>2026:</strong> Likely normalize to 4% – 5%</li>
-        <li><strong>2027:</strong> Competitive market rates</li>
-      </ul>
-    </div>
+<!-- Market Trend -->
+<div class="bg-white rounded-xl shadow-md p-6 mb-10">
+  <h2 class="text-xl font-semibold mb-4">📉 Projected Return Timeline (Market Trends)</h2>
+  <ul class="list-disc list-inside text-sm space-y-2">
+    <li><strong>2024:</strong> 5% promotional opportunity</li>
+    <li><strong>2025:</strong> Expected 6% – 8%</li>
+    <li><strong>2026:</strong> Likely normalize to 4% – 5%</li>
+    <li><strong>2027:</strong> Return to competitive market rates</li>
+  </ul>
+</div>
 
-    <!-- QR Code and CTA -->
-    <div class="text-center">
-      <p class="text-lg font-medium mb-4">📱 Scan to use full version of the calculator</p>
-      <img src="your-qr-code-url.png" alt="QR Code" class="mx-auto w-40 mb-6"/>
-      <a href="/loan-agreement-preview.html" class="inline-block bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 transition">📃 Preview Agreement</a>
-    </div>
-  </div>
+<!-- QR Code -->
+<div class="text-center">
+  <p class="text-base mb-2">📱 Scan to use full version of the calculator</p>
+  <img src="/hotdeal/qr-placeholder.png" alt="QR Code" class="w-32 mx-auto mb-4"/>
+</div>
 
-  <script>
+  </div>  <script>
     function calculateReturn() {
       const amount = parseFloat(document.getElementById("amount").value);
       let rate = 0;
@@ -83,7 +75,5 @@
 
       document.getElementById("result").innerText = result;
     }
-  </script>
-
-</body>
+  </script></body>
 </html>
