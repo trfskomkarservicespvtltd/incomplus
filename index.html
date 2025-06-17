@@ -2,154 +2,86 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Omkar Enterprises | Passive Investment Platform</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Omkar Hot Deal Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="text-gray-900 bg-white">
+<body class="bg-gray-50 text-gray-800">
 
-  <!-- NAVIGATION -->
-  <header class="fixed w-full bg-white shadow z-50">
-    <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-      <div class="flex items-center space-x-2">
-        <img src="/logo.png" alt="Logo" class="h-8 w-auto">
-        <h1 class="text-2xl font-bold text-blue-600">Omkar Enterprises</h1>
-      </div>
-      <nav class="space-x-4 text-sm font-semibold">
-        <a href="#about">About</a>
-        <a href="#plans">Plans</a>
-        <a href="#why">Why Us</a>
-        <a href="#faq">FAQ</a>
-        <a href="#blog">Blog</a>
-        <a href="#contact">Contact</a>
-      </nav>
+  <div class="max-w-4xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold text-center mb-4">🔥 Omkar Hot Deal Calculator</h1>
+    <p class="text-center text-sm text-red-600 mb-6">⚠️ Limited-time opportunity — fixed monthly returns by Omkar Enterprises</p>
+
+    <!-- Calculator -->
+    <div class="bg-white p-6 rounded-xl shadow-md mb-10">
+      <h2 class="text-xl font-semibold mb-2">📈 Calculate Monthly Return</h2>
+      <label class="block mb-2 text-sm font-medium">Enter Investment Amount (₹):</label>
+      <input id="amount" type="number" class="w-full border rounded p-2 mb-4" placeholder="e.g., 500000" />
+
+      <button onclick="calculateReturn()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Calculate</button>
+
+      <div id="result" class="mt-4 text-lg font-bold"></div>
     </div>
-  </header>
 
-  <!-- HERO -->
-  <section class="h-screen bg-gradient-to-br from-blue-700 to-blue-500 text-white flex flex-col justify-center items-center text-center px-4 pt-20">
-    <img src="/logo.png" alt="Logo" class="h-16 mb-4">
-    <h2 class="text-5xl font-bold mb-4">Build Wealth the Smart Way</h2>
-    <p class="text-lg mb-6 max-w-2xl">Join Omkar Enterprises and discover passive income through equity-backed strategies with legal protection and consistent monthly returns.</p>
-    <a href="#plans" class="bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold shadow hover:bg-blue-100">Get Started Now</a>
-  </section>
-
-  <!-- ABOUT US -->
-  <section id="about" class="py-16 bg-white px-6 max-w-6xl mx-auto">
-    <h2 class="text-3xl font-semibold text-center mb-4">About Omkar Enterprises</h2>
-    <p class="text-lg text-center text-gray-700">Omkar Enterprises brings you over 14 years of real market expertise. We focus on long-term equity holdings guided by deep analysis and time-tested methods. Every investor benefits from legal agreements, stable income, and a profit-sharing model built on trust.</p>
-  </section>
-
-  <!-- PLANS WITH CALCULATOR -->
-  <section id="plans" class="bg-gray-100 py-16 px-6">
-    <div class="max-w-5xl mx-auto text-center">
-      <h2 class="text-3xl font-semibold mb-8">Our Investment Plans</h2>
-      <p class="mb-6 text-lg">Choose a plan that suits you. Use the calculator to estimate your monthly earnings with and without bank guarantee.</p>
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-white p-6 rounded-xl shadow">
-          <h3 class="text-xl font-bold mb-4">Without Bank Guarantee</h3>
-          <input id="amountNoBG" type="number" placeholder="Enter Amount" class="border p-2 w-full mb-4">
-          <button onclick="calculateNoBG()" class="bg-blue-600 text-white px-4 py-2 rounded">Calculate</button>
-          <p id="resultNoBG" class="mt-4 font-semibold text-green-600"></p>
-        </div>
-        <div class="bg-white p-6 rounded-xl shadow">
-          <h3 class="text-xl font-bold mb-4">With Bank Guarantee</h3>
-          <input id="amountBG" type="number" placeholder="Enter Amount" class="border p-2 w-full mb-4">
-          <button onclick="calculateBG()" class="bg-blue-600 text-white px-4 py-2 rounded">Calculate</button>
-          <p id="resultBG" class="mt-4 font-semibold text-green-600"></p>
-        </div>
-      </div>
+    <!-- Rate Slab Table -->
+    <div class="bg-white p-6 rounded-xl shadow-md mb-10">
+      <h2 class="text-xl font-semibold mb-4">💹 Monthly Return Slabs (No Bank Guarantee)</h2>
+      <table class="w-full table-auto border">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="p-2 text-left">Investment (₹)</th>
+            <th class="p-2 text-left">Rate / Month</th>
+            <th class="p-2 text-left">Return (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="p-2">Up to 1,00,000</td><td class="p-2">5%</td><td class="p-2">₹5,000</td></tr>
+          <tr><td class="p-2">2,10,000</td><td class="p-2">6%</td><td class="p-2">₹12,600</td></tr>
+          <tr><td class="p-2">3,10,000</td><td class="p-2">7.5%</td><td class="p-2">₹23,250</td></tr>
+          <tr><td class="p-2">5,00,000</td><td class="p-2">8%</td><td class="p-2">₹40,000</td></tr>
+          <tr><td class="p-2">5.10 – 10 Lakhs</td><td class="p-2">8.5%</td><td class="p-2">₹43,350 – ₹85,000</td></tr>
+          <tr><td class="p-2">10.10 – 25 Lakhs</td><td class="p-2">9%</td><td class="p-2">₹90,900 – ₹2,25,000</td></tr>
+        </tbody>
+      </table>
     </div>
-  </section>
 
-  <!-- WHY US -->
-  <section id="why" class="py-16 px-6 bg-white text-center">
-    <h2 class="text-3xl font-semibold mb-4">Why Choose Us?</h2>
-    <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-      <div>
-        <h3 class="text-xl font-bold mb-2">Experience</h3>
-        <p>14+ years of stock market research & execution.</p>
-      </div>
-      <div>
-        <h3 class="text-xl font-bold mb-2">Legal Assurance</h3>
-        <p>Fully notarized agreements and capital protection options.</p>
-      </div>
-      <div>
-        <h3 class="text-xl font-bold mb-2">Profit Sharing</h3>
-        <p>We earn only when you earn. 50% profit is shared monthly.</p>
-      </div>
+    <!-- Market Trend -->
+    <div class="bg-white p-6 rounded-xl shadow-md mb-10">
+      <h2 class="text-xl font-semibold mb-4">📉 Projected Rate Timeline (Market Trend)</h2>
+      <ul class="list-disc list-inside text-sm space-y-2">
+        <li><strong>2024:</strong> 5% promotional opportunity</li>
+        <li><strong>2025:</strong> Expected 6% – 8%</li>
+        <li><strong>2026:</strong> Likely normalize to 4% – 5%</li>
+        <li><strong>2027:</strong> Competitive market rates</li>
+      </ul>
     </div>
-  </section>
 
-  <!-- FAQ -->
-  <section id="faq" class="bg-gray-100 py-16 px-6">
-    <h2 class="text-3xl font-semibold text-center mb-8">Frequently Asked Questions</h2>
-    <div class="max-w-4xl mx-auto">
-      <details class="mb-4">
-        <summary class="font-semibold">How is my capital protected?</summary>
-        <p class="pl-4 mt-2">Capital is secured through legal agreements and optionally backed by a bank guarantee.</p>
-      </details>
-      <details class="mb-4">
-        <summary class="font-semibold">What if the market is down?</summary>
-        <p class="pl-4 mt-2">We do not trade daily. We hold strong positions and only exit after meeting our targets.</p>
-      </details>
-      <details>
-        <summary class="font-semibold">How do I start?</summary>
-        <p class="pl-4 mt-2">Contact us via WhatsApp to begin with agreement signing and capital transfer process.</p>
-      </details>
+    <!-- QR Code and CTA -->
+    <div class="text-center">
+      <p class="text-lg font-medium mb-4">📱 Scan to use full version of the calculator</p>
+      <img src="your-qr-code-url.png" alt="QR Code" class="mx-auto w-40 mb-6"/>
+      <a href="/loan-agreement-preview.html" class="inline-block bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 transition">📃 Preview Agreement</a>
     </div>
-  </section>
+  </div>
 
-  <!-- BLOG SECTION -->
-  <section id="blog" class="py-16 px-6 max-w-6xl mx-auto">
-    <h2 class="text-3xl font-semibold text-center mb-8">Insights & Blog</h2>
-    <p class="text-center text-gray-600 mb-6">Market updates, strategy breakdowns, and success stories.</p>
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="bg-white p-4 shadow rounded">
-        <h4 class="font-bold mb-2">3 Mistakes Most Investors Make</h4>
-        <p class="text-sm">Learn what to avoid to maximize your equity returns.</p>
-      </div>
-      <div class="bg-white p-4 shadow rounded">
-        <h4 class="font-bold mb-2">How Bank Guarantees Protect Capital</h4>
-        <p class="text-sm">Understanding the legal and financial safety it brings.</p>
-      </div>
-      <div class="bg-white p-4 shadow rounded">
-        <h4 class="font-bold mb-2">Profit Sharing Strategy Explained</h4>
-        <p class="text-sm">See how we split earnings transparently every month.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="py-16 bg-blue-700 text-white text-center">
-    <h2 class="text-3xl font-semibold mb-4">Contact Us</h2>
-    <p class="mb-6">We are here to answer any of your questions.</p>
-    <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="inline-block bg-white text-blue-700 font-bold px-6 py-3 rounded">Chat on WhatsApp</a>
-  </section>
-
-  <!-- LEGAL & PRIVACY -->
-  <section class="py-12 px-6 text-center text-sm text-gray-500 bg-gray-50">
-    <p><a href="#" class="underline">Privacy Policy</a> | <a href="#" class="underline">Legal Documents</a></p>
-    <p class="mt-2">© 2025 Omkar Enterprises. All Rights Reserved.</p>
-  </section>
-
-  <!-- JS CALCULATORS -->
   <script>
-    function calculateNoBG() {
-      const amount = parseFloat(document.getElementById("amountNoBG").value);
-      if (!isNaN(amount)) {
-        document.getElementById("resultNoBG").innerText = `Est. Monthly Return: ₹${(amount * 0.03).toFixed(2)}`;
-      }
-    }
-    function calculateBG() {
-      const amount = parseFloat(document.getElementById("amountBG").value);
-      if (!isNaN(amount)) {
-        document.getElementById("resultBG").innerText = `Est. Monthly Return: ₹${(amount * 0.025).toFixed(2)}`;
-      }
+    function calculateReturn() {
+      const amount = parseFloat(document.getElementById("amount").value);
+      let rate = 0;
+
+      if (amount <= 100000) rate = 5;
+      else if (amount <= 210000) rate = 6;
+      else if (amount <= 310000) rate = 7.5;
+      else if (amount <= 500000) rate = 8;
+      else if (amount <= 1000000) rate = 8.5;
+      else if (amount <= 2500000) rate = 9;
+      else rate = 0;
+
+      const result = rate > 0
+        ? `Monthly Return: ₹${(amount * rate / 100).toLocaleString()} at ${rate}% per month`
+        : `Please enter an amount up to ₹25,00,000`;
+
+      document.getElementById("result").innerText = result;
     }
   </script>
 
