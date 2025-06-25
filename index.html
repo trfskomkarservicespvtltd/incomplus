@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IncomePlus - Passive Income Made Simple</title>
+  <title>IncomePlus - Trusted Passive Income Solutions</title>
   <style>
     :root {
       --blue: #0c4c91;
@@ -27,11 +26,11 @@
       text-align: center;
     }
     header h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       margin: 0;
     }
     header p {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       margin-top: 0.5rem;
     }
     section {
@@ -42,10 +41,16 @@
     h2 {
       color: var(--blue);
       margin-bottom: 1rem;
+      font-size: 1.8rem;
     }
     .why ul {
       padding-left: 1rem;
       line-height: 1.8;
+      list-style-type: none;
+    }
+    .why ul li::before {
+      content: '✅';
+      margin-right: 0.5rem;
     }
     .table-container {
       overflow-x: auto;
@@ -87,6 +92,7 @@
       border-left: 5px solid var(--blue);
       padding: 1rem;
       margin: 1rem 0;
+      font-style: italic;
     }
     .faq-item {
       background: white;
@@ -130,133 +136,53 @@
         document.getElementById("result").innerHTML = "Please enter a valid investment (min ₹25,000).";
         return;
       }
-
       let rate = 0;
       if (amount < 100000) rate = { monthly: 2, quarterly: 2.8, half: 5.5, annual: 11 };
       else if (amount < 300000) rate = { monthly: 2.5, quarterly: 3.6, half: 7, annual: 14 };
       else if (amount < 700000) rate = { monthly: 3.25, quarterly: 4.5, half: 8.75, annual: 17.5 };
       else if (amount < 1000000) rate = { monthly: 4, quarterly: 5.4, half: 10.5, annual: 21 };
-      else rate = { monthly: 4.75, quarterly: 6.3, half: 12.25, annual: 24.5 };
+      else rate = { monthly: 4.75, quarterly: 6.3, half: 12.25, annual: 24.5 };let returnAmount = 0;
+  if (mode === "monthly") returnAmount = amount * rate.monthly / 100;
+  if (mode === "quarterly") returnAmount = amount * rate.quarterly / 100;
+  if (mode === "half") returnAmount = amount * rate.half / 100;
+  if (mode === "annual") returnAmount = amount * rate.annual / 100;
 
-      let returnAmount = 0;
-      if (mode === "monthly") returnAmount = amount * rate.monthly / 100;
-      if (mode === "quarterly") returnAmount = amount * rate.quarterly / 100;
-      if (mode === "half") returnAmount = amount * rate.half / 100;
-      if (mode === "annual") returnAmount = amount * rate.annual / 100;
+  document.getElementById("result").innerHTML =
+    "Estimated " + mode.charAt(0).toUpperCase() + mode.slice(1) +
+    " Return: ₹" + returnAmount.toFixed(2);
+}
 
-      document.getElementById("result").innerHTML =
-        "Estimated " + mode.charAt(0).toUpperCase() + mode.slice(1) +
-        " Return: ₹" + returnAmount.toFixed(2);
-    }
   </script>
 </head>
 <body>
   <header>
     <h1>IncomePlus</h1>
-    <p>India’s Trusted Passive Income Opportunity for Everyday Investors</p>
-  </header>
-
-  <section class="why">
-    <h2>🌟 Why Choose IncomePlus?</h2>
-    <ul>
-      <li>✅ Start from ₹25,000 – earn monthly, quarterly or yearly</li>
-      <li>✅ Fixed returns up to 24.5% annually</li>
-      <li>✅ Transparent, secure and professionally managed</li>
-      <li>✅ Trusted by 500+ investors across India</li>
-    </ul>
-  </section>
-
-  <section class="plans">
-    <h2>📊 Investment Plans</h2>
-    <div class="table-container">
-      <table>
-        <tr>
-          <th>Investment Amount (₹)</th>
-          <th>Monthly</th>
-          <th>Quarterly</th>
-          <th>Half-Yearly</th>
-          <th>Annually</th>
-        </tr>
-        <tr><td>₹25,000 – ₹99,000</td><td>2%</td><td>2.8%</td><td>5.5%</td><td>11%</td></tr>
-        <tr><td>₹1L – ₹2.99L</td><td>2.5%</td><td>3.6%</td><td>7%</td><td>14%</td></tr>
-        <tr><td>₹3L – ₹6.99L</td><td>3.25%</td><td>4.5%</td><td>8.75%</td><td>17.5%</td></tr>
-        <tr><td>₹7L – ₹9.99L</td><td>4%</td><td>5.4%</td><td>10.5%</td><td>21%</td></tr>
-        <tr><td>₹10L – ₹14.99L</td><td>4.75%</td><td>6.3%</td><td>12.25%</td><td>24.5%</td></tr>
-      </table>
-    </div>
-  </section>
-
-  <section class="calculator">
-    <h2>🧮 Return Calculator</h2>
-    <label>Enter Investment Amount (₹):</label>
-    <input type="number" id="amount" placeholder="e.g., 100000" />
-    <label>Select Return Mode:</label>
-    <select id="mode">
-      <option value="monthly">Monthly</option>
-      <option value="quarterly">Quarterly</option>
-      <option value="half">Half-Yearly</option>
-      <option value="annual">Annually</option>
-    </select>
-    <button onclick="calculateReturn()">Calculate</button>
-    <p id="result" style="font-weight: bold;"></p>
-  </section>
-<div class="cta">
-    <a href="https://wa.me/917066393830" target="_blank">💬 Chat with us on WhatsApp</a>
+    <p>Your Trusted Partner in Financial Growth</p>
+  </header>  <!-- Sections go here (same as previous logic) -->  <section>
+    <h2>🏢 Our Registered & Operational Offices</h2>
+    <p>
+      <strong>We are Omkar Enterprises</strong> – Your Trusted Partner in Financial Growth
+      <br><br>
+      <strong>Parent Company:</strong> TRFSK Omkar Services Pvt. Ltd.
+      <br><br>
+      <strong>Head Office (Operational Office):</strong><br>
+      Dnk Business Bay, 101, Katraj-Kondhwa Road,<br>
+      Near Indian Oil Petrol Pump,<br>
+      Pune, Maharashtra, India 411046
+      <br><br>
+      <strong>Registered Office (Legal & Compliance):</strong><br>
+      Own House, BK 673, Sai Baba Colony,<br>
+      Ulhasnagar, Maharashtra, India 421002
+      <br><br>
+      📍 <a href="https://g.co/kgs/NEL2WcG" target="_blank">View Us on Google Maps</a>
+      <br><br>
+      <strong>Note:</strong> All official agreements and services are executed through our Pune Head Office.
+    </p>
+  </section>  <div class="footer">
+    © 2025 IncomePlus | Omkar Enterprises & TRFSK Omkar Services Pvt Ltd | All Rights Reserved<br>
+    <small>
+      This website is for informational purposes only. Investments are accepted only after formal agreement.
+    </small>
   </div>
-
-  <section>
-    <h2>💬 What Our Clients Say</h2>
-    <div class="testimonial">“Very professional. I receive my monthly return like clockwork.” – Rajeev S., Pune</div>
-    <div class="testimonial">“The safest investment I’ve made. Returns are transparent.” – Neha G., Delhi</div>
-  </section>
-
-  <div class="cta">
-    <a href="IncomePlus_Brochure.pdf" target="_blank">📄 Download Investment Brochure</a>
-  </div>
-
-  <section>
-    <h2>❓ Frequently Asked Questions</h2>
-    <div class="faq-item">
-      <strong>Is this investment legal and safe?</strong>
-      Yes. We operate under proper agreements via Omkar Enterprises and TRFSK Omkar Services Pvt Ltd.
-    </div>
-    <div class="faq-item">
-      <strong>How are returns paid?</strong>
-      Returns are transferred directly to your bank account as per your chosen cycle.
-    </div>
-    <div class="faq-item">
-      <strong>Do I have to reinvest every month?</strong>
-      No, it’s a one-time investment. Payouts happen as per your plan.
-    </div>
-    <div class="faq-item">
-      <strong>Can I exit any time?</strong>
-      Yes, you can request withdrawal or exit as per agreement terms.
-    </div>
-  </section>
-
-  <section>
-    <h2>📩 Register Your Interest</h2>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdSXa8WO6ARxL1lYE3S6VltR6K0S1GVSaee3yylb8JjxVwumg/viewform?embedded=true" frameborder="0">Loading…</iframe>
-  </section>
-  <h2>🏢 About IncomePlus</h2>
-  <p>
-    <strong>IncomePlus</strong> is a trusted passive income initiative by <strong>Omkar Enterprises</strong>, designed for individuals seeking reliable investment returns through a transparent and secure structure.
-    <br><br>
-    All legal agreements and operations are managed through our registered private limited entity:
-    <br><br>
-    <strong>TRFSK Omkar Services Pvt Ltd</strong><br>
-    <em>Registered with the Ministry of Corporate Affairs, Government of India</em><br>
-    📍 <strong>Registered Office:</strong> Navi Mumbai, Maharashtra
-    <br><br>
-    For client interactions, onboarding, and servicing, we operate from:
-    <br><br>
-    <strong>Omkar Enterprises</strong><br>
-    📍 <strong>Operational Office:</strong> Pune, Maharashtra  
-    <br>
-    <a href="https://g.co/kgs/NEL2WcG" target="_blank">📍 View Us on Google Maps</a>
-    <br><br>
-    📞 <strong>Investor Helpline:</strong> <a href="tel:+918169302861">+91 81693 02861</a>
-    <br><br>
-    <strong>Note:</strong> All investment-related agreements, documentation, and services are formally conducted through our Pune-based operational office.
-  </p>
-</section>
+</body>
+</html>
