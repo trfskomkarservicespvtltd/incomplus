@@ -14,12 +14,37 @@
     * {
       box-sizing: border-box;
     }
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: var(--gray);
       color: #333;
-      margin: 0;
-      padding: 0;
+      scroll-behavior: smooth;
+    }
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    #loader::after {
+      content: "";
+      width: 40px;
+      height: 40px;
+      border: 5px solid var(--blue);
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
     header {
       background: linear-gradient(to right, #0c4c91, #2980b9);
@@ -55,52 +80,10 @@
       margin-bottom: 1rem;
       text-align: center;
     }
-    .why ul {
-      padding-left: 1rem;
-      line-height: 1.8;
-    }
-    .table-container {
-      overflow-x: auto;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1rem 0;
-      min-width: 600px;
+    .cta, .footer, .faq-item, .testimonial, table {
       background: white;
       border-radius: 10px;
-      overflow: hidden;
-    }
-    th, td {
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      text-align: center;
-    }
-    th {
-      background-color: var(--light-blue);
-    }
-    .calculator input, .calculator select {
-      width: 100%;
-      padding: 0.75rem;
-      margin: 0.5rem 0 1rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-    button {
-      background-color: var(--blue);
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #08376b;
-    }
-    .cta {
-      text-align: center;
-      margin: 2rem 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
     .cta a {
       background-color: var(--blue);
@@ -115,23 +98,161 @@
     .cta a:hover {
       background-color: #08376b;
     }
+    .faq-item {
+      padding: 1rem;
+      border: 1px solid #ddd;
+      margin-bottom: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .faq-item:hover {
+      background-color: #f0f8ff;
+    }
+    iframe {
+      width: 100%;
+      height: 800px;
+      border: none;
+    }
+    .footer {
+      background-color: var(--blue);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
+    #whatsapp-sticky {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25d366;
+      color: white;
+      border-radius: 50%;
+      padding: 15px;
+      z-index: 999;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    #whatsapp-sticky img {
+      width: 30px;
+      height: 30px;
+    }
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      .cta a {
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+      }
+      table {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="loader"></div>
+
+  <header>
+    <h1>IncomePlus</h1>
+    <p>India’s Trusted Passive Income Opportunity for Everyday Investors</p>
+  </header>
+
+  <!-- ALL LANDING PAGE CONTENT STARTS HERE -->
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IncomePlus - Passive Income Made Simple</title>
+  <style>
+    :root {
+      --blue: #0c4c91;
+      --light-blue: #e0ecf9;
+      --gray: #f4f6f9;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--gray);
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: linear-gradient(to right, #0c4c91, #2980b9);
+      color: white;
+      padding: 3rem 1rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+    header p {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+    }
+    section {
+      padding: 2rem 1rem;
+      max-width: 960px;
+      margin: auto;
+    }
+    h2 {
+      color: var(--blue);
+      margin-bottom: 1rem;
+    }
+    .why ul {
+      padding-left: 1rem;
+      line-height: 1.8;
+    }
+    .table-container {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      min-width: 600px;
+    }
+    th, td {
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background-color: var(--light-blue);
+    }
+    .calculator input, .calculator select {
+      width: 100%;
+      padding: 0.5rem;
+      margin: 0.5rem 0 1rem;
+    }
+    .cta {
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .cta a {
+      background-color: var(--blue);
+      color: white;
+      padding: 1rem 2rem;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      display: inline-block;
+    }
     .testimonial {
       background: white;
       border-left: 5px solid var(--blue);
       padding: 1rem;
       margin: 1rem 0;
-      border-radius: 8px;
     }
     .faq-item {
       background: white;
       padding: 1rem;
       border: 1px solid #ddd;
       margin-bottom: 1rem;
-      transition: background-color 0.3s ease;
-      border-radius: 6px;
-    }
-    .faq-item:hover {
-      background-color: #f0f8ff;
     }
     .faq-item strong {
       display: block;
@@ -159,16 +280,342 @@
         font-size: 1rem;
         padding: 0.75rem 1.5rem;
       }
-      table {
-        font-size: 0.9rem;
-      }
     }
   </style>
 </head>
 <body>
-  <!-- Your full content sections go here below header -->
+  <header>
+    <h1>IncomePlus</h1>
+    <p>India’s Trusted Passive Income Opportunity for Everyday Investors</p>
+  </header>
+
+  <section class="why">
+    <h2>🌟 Why Choose IncomePlus?</h2>
+    <ul>
+      <li>Start from ₹25,000 – earn monthly, quarterly or yearly</li>
+      <li>Fixed returns up to 24.5% annually</li>
+      <li>Transparent, secure and professionally managed</li>
+      <li>Trusted by 500+ investors across India</li>
+    </ul>
+  </section>
+
+  <section class="plans">
+    <h2>📊 Investment Plans</h2>
+    <div class="table-container">
+      <table>
+        <tr>
+          <th>Investment Amount (₹)</th>
+          <th>Monthly</th>
+          <th>Quarterly</th>
+          <th>Half-Yearly</th>
+          <th>Annually</th>
+        </tr>
+        <tr><td>₹25,000 – ₹99,000</td><td>2%</td><td>2.8%</td><td>5.5%</td><td>11%</td></tr>
+        <tr><td>₹1L – ₹2.99L</td><td>2.5%</td><td>3.6%</td><td>7%</td><td>14%</td></tr>
+        <tr><td>₹3L – ₹6.99L</td><td>3.25%</td><td>4.5%</td><td>8.75%</td><td>17.5%</td></tr>
+        <tr><td>₹7L – ₹9.99L</td><td>4%</td><td>5.4%</td><td>10.5%</td><td>21%</td></tr>
+        <tr><td>₹10L – ₹14.99L</td><td>4.75%</td><td>6.3%</td><td>12.25%</td><td>24.5%</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="calculator">
+    <h2>🧮 Return Calculator</h2>
+    <label>Enter Investment Amount (₹):</label>
+    <input type="number" id="amount" placeholder="e.g., 100000" />
+    <label>Select Return Mode:</label>
+    <select id="mode">
+      <option value="monthly">Monthly</option>
+      <option value="quarterly">Quarterly</option>
+      <option value="half">Half-Yearly</option>
+      <option value="annual">Annually</option>
+    </select>
+    <button onclick="calculateReturn()">Calculate</button>
+    <p id="result" style="font-weight: bold;"></p>
+    <p id="monthlyNote" style="color: #0c4c91;"></p>
+    <p id="finalPayoutNote" style="color: green; font-weight: bold;"></p>
+  </section>
+
+  <div class="cta">
+    <a href="https://wa.me/917066393830" target="_blank">💬 Chat with us on WhatsApp</a>
+  </div>
+
+  <section>
+    <h2>💬 What Our Clients Say</h2>
+     <!-- Testimonial 1 -->
+    <div style="border: 1px solid #eee; border-radius: 10px; padding: 20px; background: #fafafa;">
+      <p style="font-style: italic;">""I can’t express enough gratitude to Omkar Enterprises for their unwavering support and expertise. They didn’t just manage my investments; they became trusted allies in my financial journey. Thanks to their dedication, I’ve achieved my goals and feel more secure about the future. Truly outstanding service!
+"</p>
+      <p><strong>– Laxmikanta Mohanty., Bhubneshwar</strong> <br><small>Investor since May 2023</small></p>
+    </div>
+
+    <!-- Testimonial 2 -->
+    <div style="border: 1px solid #eee; border-radius: 10px; padding: 20px; background: #fdfdfd;">
+      <p style="font-style: italic;">"Choosing Omkar Enterprises was one of the best decisions I’ve made for my financial well-being. Their team went above and beyond to understand my needs and tailor a plan that suited me perfectly. With their guidance, I’ve seen remarkable growth in my investments, and I couldn’t be happier. Thank you, Omkar Enterprises, for making my financial dreams a reality! "</p>
+      <p><strong>– Ishita Jadhav, Nagpur</strong> <br><small>Verified PDC Investor</small></p>
+    </div>
+
+    <!-- Testimonial 3 -->
+    <div style="border: 1px solid #eee; border-radius: 10px; padding: 20px; background: #fafafa;">
+      <p style="font-style: italic;">"Safe, "I’ve had my fair share of experiences with financial advisors, but Omkar Enterprises stands out from the rest. They don’t just talk the talk; they walk the walk. Their commitment to accuracy and reliability is unparalleled, and it’s evident in the results I’ve achieved. I wholeheartedly trust Income-plus with my financial future."</p>
+      <p><strong>– Ajay Kumar., Haryana</strong> <br><small>Short-Term Plan – 12 Months</small></p>
+    </div>
+
+    <!-- Testimonial 4 -->
+    <div style="border: 1px solid #eee; border-radius: 10px; padding: 20px; background: #fdfdfd;">
+      <p style="font-style: italic;">"Their transparent agreement and notarized documentation gave me full peace of mind. I upgraded from ₹1L to ₹1.4L within 4 months."</p>
+      <p><strong>– Swati Malvia., Calacutta</strong> <br><small>Renewed Investment Twice</small></p>
+    </div>
+
+    <!-- Testimonial 5 -->
+    <div style="border: 1px solid #eee; border-radius: 10px; padding: 20px; background: #fafafa;">
+      <p style="font-style: italic;">"Returns are fixed and timely. I’ve used the income to support my household and small business. Highly recommended for those looking for passive income."</p>
+      <p><strong>– Ruthvik URS ., Banglore</strong> <br><small>Monthly Return: ₹14,000 on ₹1.25L</small></p>
+    </div>
+  </section>
+
+  <div class="cta">
+    <a href="IncomePlus_Brochure.pdf" target="_blank">📄 Download Investment Brochure</a>
+  </div>
+
+  <section>
+    <h2>❓ Frequently Asked Questions</h2>
+   <!-- FAQ Section (hover-style accordion) -->
+<section id="faq" class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-8 text-center">📌 Frequently Asked Questions (FAQs)</h2>
+      <div class="faq-accordion space-y-4 max-w-3xl mx-auto">
+        
+        <div class="faq-item">
+          <div class="faq-question font-semibold">
+            <span>1) How does the investment work?</span><span>▼</span>
+          </div>
+          <div class="faq-answer text-gray-700">
+            Once you decide your investment amount, we sign a notarized loan agreement and provide post-dated cheques (PDCs) as security. You receive a fixed monthly income for 12 months, and your capital is returned in the 13th month.
+          </div>
+        </div>
+
+        <!-- Repeat the same block for items 2–14 -->
+        <!-- Example for item 2 -->
+        <div class="faq-item">
+          <div class="faq-question font-semibold">
+            <span>2) Where will you use our investment?</span><span>▼</span>
+          </div>
+          <div class="faq-answer text-gray-700">
+            Your funds are invested in long-term equity holdings based on 15+ years of market experience and analysis, with no intraday or high-risk trades involved.
+          </div>
+        </div>
+<div class="faq-item">
+          <div class="faq-question font-semibold">
+            <span>3) What is the guarantee of capital?</span><span>▼</span>
+          </div>
+          <div class="faq-answer text-gray-700">
+            Your capital is secured through a notarized loan agreement and post-dated cheques (PDCs), enforceable by law.
+          </div>
+        </div>
+
+<div class="faq-item">
+          <div class="faq-question font-semibold">
+            <span>4) What is the guarantee of returns?</span><span>▼</span>
+          </div>
+          <div class="faq-answer text-gray-700">
+            Returns are fixed and guaranteed as per the agreement, independent of market performance. You get paid monthly as promised.
+          </div>
+        </div>
+
+<div class="faq-item">
+          <div class="faq-question font-semibold">
+            <span>5) What documents are provided and how do they protect me?</span><span>▼</span>
+          </div>
+          <div class="faq-answer text-gray-700">
+You receive a notarized loan agreement and PDC cheques. In case of any issue, these legally protect your investment and support recovery through legal channels.
+	</div>
+      </div>
+
+<div class="faq-item">
+          <div class="faq-question font-semibold">
+            <span>6) When will I get returns every month?</span><span>▼</span>
+          </div>
+          <div class="faq-answer text-gray-700">
+            Between the 1st and 5th of each month. If you invest before the 7th of a month, you receive full returns for that month.
+          </div>
+        </div>
+
+<div class="faq-item">
+          <div class="faq-question font-semibold">
+            <span>7) Can I withdraw my investment anytime?</span><span>▼</span>
+          </div>
+          <div class="faq-answer text-gray-700">
+            No, the investment is locked for 12 months. Early withdrawal is not permitted due to long-term strategy deployment.
+          </div>
+        </div>
+
+<div class="faq-item">
+          <div class="faq-question font-semibold">
+            <span>8) What happens if I don't want to continue?</span><span>▼</span>
+          </div>
+          <div class="faq-answer text-gray-700">
+            After 12 months, you can choose not to reinvest. Your capital is returned in the 13th month, and you exit the program.
+          </div>
+        </div>
+
+<div class="faq-item">
+          <div class="faq-question font-semibold">
+            <span>9) What happens after the 12th and 13th month?</span><span>▼</span>
+          </div>
+          <div class="faq-answer text-gray-700">
+            Month 12: Final monthly return.<br>Month 13: Capital returned to your bank account. You can reinvest or exit.
+          </div>
+        </div>
+
+<div class="faq-item">
+          <div class="faq-question font-semibold">
+            <span>10) Are there hidden terms & conditions?</span><span>▼</span>
+          </div>
+          <div class="faq-answer text-gray-700">
+            No hidden clauses. Everything is outlined clearly in the agreement, including returns, repayment terms, and security details.
+          </div>
+        </div>
+
+<div class="faq-item">
+          <div class="faq-question font-semibold">
+            <span>11) How will the notary process work?</span><span>▼</span>
+          </div>
+          <div class="faq-answer text-gray-700">
+            Offline. Once you approve the agreement digitally, we notarize and courier it to your registered address.
+          </div>
+        </div>
+
+<div class="faq-item">
+          <div class="faq-question font-semibold">
+            <span>12) Where do I go to sign the agreement?</span><span>▼</span>
+          </div>
+          <div class="faq-answer text-gray-700">
+            No visit required. We courier the agreement, and you sign it from your location.
+          </div>
+        </div>
+
+<div class="faq-item">
+          <div class="faq-question font-semibold">
+            <span>13) Can I visit the office?</span><span>▼</span>
+          </div>
+          <div class="faq-answer text-gray-700">
+            We work digitally across India. Office visits are by appointment only, as most investors are served remotely.
+          </div>
+        </div>
+
+<div class="faq-item">
+          <div class="faq-question font-semibold">
+            <span>14) Can I deposit the PDC cheque if I don't get returns?</span><span>▼</span>
+          </div>
+          <div class="faq-answer text-gray-700">
+           Yes. The PDCs are your legal right. You may deposit them if returns are not paid, to recover your dues as per agreement.
+          </div>
+        </div>
+ 
+      <div class="text-center mt-10">
+<a href="https://eligibility.omkarservices.in/referral.html" class="btn btn-outline-primary px-5 py-2 rounded-pill text-lg" target="_blank" rel="noopener noreferrer">
+  Become a Referral Partner
+</a>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>📩 Register Your Interest</h2>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdSXa8WO6ARxL1lYE3S6VltR6K0S1GVSaee3yylb8JjxVwumg/viewform?embedded=true" frameborder="0">Loading…</iframe>
+  </section>
+
+  <section>
+    <h2>🏢 Our Registered & Operational Offices</h2>
+    <p>
+      <strong>We are Omkar Enterprises</strong> – Your Trusted Partner in Financial Growth<br><br>
+      <strong>Parent Company:</strong> TRFSK Omkar Services Pvt. Ltd.<br><br>
+      <strong>Head Office (Operational Office):</strong><br>
+      Dnk Business Bay, 101, Katraj-Kondhwa Road,<br>
+      Near Indian Oil Petrol Pump,<br>
+      Pune, Maharashtra, India 411046<br><br>
+      <strong>Registered Office (Legal & Compliance):</strong><br>
+      Own House, BK 673, Sai Baba Colony,<br>
+      Ulhasnagar, Maharashtra, India 421002<br><br>
+      📍 <a href="https://g.co/kgs/NEL2WcG" target="_blank">View Us on Google Maps</a><br><br>
+      <strong>Note:</strong> All official agreements and services are executed through our Pune Head Office.
+    </p>
+  </section>
+
+  <div class="footer">
+    © 2025 IncomePlus | Omkar Enterprises & TRFSK Omkar Services Pvt Ltd | All Rights Reserved<br>
+    <small>
+      Investments are only accepted after formal verification and agreement. Returns are subject to the agreed plan.
+    </small>
+  </div>
 
   <script>
+    function calculateReturn() {
+      var amount = parseFloat(document.getElementById("amount").value);
+      var mode = document.getElementById("mode").value;
+      if (isNaN(amount) || amount < 25000) {
+        document.getElementById("result").innerHTML = "Please enter a valid investment (min ₹25,000).";
+        document.getElementById("monthlyNote").innerHTML = "";
+        document.getElementById("finalPayoutNote").innerHTML = "";
+        return;
+      }
+
+      let rate = 0;
+      if (amount < 100000) rate = { monthly: 2, quarterly: 2.8, half: 5.5, annual: 11 };
+      else if (amount < 300000) rate = { monthly: 2.5, quarterly: 3.6, half: 7, annual: 14 };
+      else if (amount < 700000) rate = { monthly: 3.25, quarterly: 4.5, half: 8.75, annual: 17.5 };
+      else if (amount < 1000000) rate = { monthly: 4, quarterly: 5.4, half: 10.5, annual: 21 };
+      else rate = { monthly: 4.75, quarterly: 6.3, half: 12.25, annual: 24.5 };
+
+      let cycles = 1;
+      if (mode === "monthly") cycles = 12;
+      if (mode === "quarterly") cycles = 4;
+      if (mode === "half") cycles = 2;
+      if (mode === "annual") cycles = 1;
+
+      let returnPerCycle = 0;
+      if (mode === "monthly") returnPerCycle = amount * rate.monthly / 100;
+      if (mode === "quarterly") returnPerCycle = amount * rate.quarterly / 100;
+      if (mode === "half") returnPerCycle = amount * rate.half / 100;
+      if (mode === "annual") returnPerCycle = amount * rate.annual / 100;
+
+      let totalReturn = returnPerCycle * cycles;
+      let approxMonthly = totalReturn / 12;
+      let monthlyPayout = (amount + totalReturn) / 12;
+
+      document.getElementById("result").innerHTML =
+        "Return per cycle: ₹" + returnPerCycle.toFixed(2) + "<br>" +
+        "Total Return over plan: ₹" + totalReturn.toFixed(2);
+
+      document.getElementById("monthlyNote").innerHTML =
+        "Note: Approx. ₹" + approxMonthly.toFixed(2) + " may be received monthly (12-month spread of return only).";
+
+      document.getElementById("finalPayoutNote").innerHTML =
+        "✅ Total Payout (Capital + Interest): ₹" + (amount + totalReturn).toFixed(2) + "<br>" +
+        "➡️ You will receive approx. ₹" + monthlyPayout.toFixed(2) + " per month for 12 months (Capital + Profit).";
+    }
+  </script>
+</body>
+</html> 
+  <div id="whatsapp-sticky">
+    <a href="https://wa.me/917066393830" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat on WhatsApp">
+    </a>
+  </div>
+
+  <div class="footer">
+    © 2025 IncomePlus | Omkar Enterprises & TRFSK Omkar Services Pvt Ltd | All Rights Reserved<br>
+    <small>
+      Investments are only accepted after formal verification and agreement. Returns are subject to the agreed plan.
+    </small>
+  </div>
+
+  <script>
+    // Loader
+    window.addEventListener("load", () => {
+      document.getElementById("loader").style.display = "none";
+    });
+
     // Fade-in animation on scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
