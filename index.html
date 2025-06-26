@@ -9,156 +9,23 @@
       --blue: #0c4c91;
       --light-blue: #e0ecf9;
       --gray: #f4f6f9;
-      --fade-duration: 0.8s;
     }
     * {
       box-sizing: border-box;
     }
-    html, body {
-      margin: 0;
-      padding: 0;
+    body {
       font-family: 'Segoe UI', sans-serif;
       background-color: var(--gray);
       color: #333;
-      scroll-behavior: smooth;
-    }
-    #loader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-    #loader::after {
-      content: "";
-      width: 40px;
-      height: 40px;
-      border: 5px solid var(--blue);
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+      margin: 0;
+      padding: 0;
     }
     header {
       background: linear-gradient(to right, #0c4c91, #2980b9);
       color: white;
       padding: 3rem 1rem;
       text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
     }
-    header h1 {
-      font-size: 2.5rem;
-      margin: 0;
-    }
-    header p {
-      font-size: 1.2rem;
-      margin-top: 0.5rem;
-    }
-    section {
-      padding: 2rem 1rem;
-      max-width: 960px;
-      margin: auto;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity var(--fade-duration) ease-out, transform var(--fade-duration) ease-out;
-    }
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    h2 {
-      color: var(--blue);
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    .cta, .footer, .faq-item, .testimonial, table {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    .cta a {
-      background-color: var(--blue);
-      color: white;
-      padding: 1rem 2rem;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      display: inline-block;
-      transition: background-color 0.3s ease;
-    }
-    .cta a:hover {
-      background-color: #08376b;
-    }
-    .faq-item {
-      padding: 1rem;
-      border: 1px solid #ddd;
-      margin-bottom: 1rem;
-      transition: background-color 0.3s ease;
-    }
-    .faq-item:hover {
-      background-color: #f0f8ff;
-    }
-    iframe {
-      width: 100%;
-      height: 800px;
-      border: none;
-    }
-    .footer {
-      background-color: var(--blue);
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      margin-top: 3rem;
-    }
-    #whatsapp-sticky {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #25d366;
-      color: white;
-      border-radius: 50%;
-      padding: 15px;
-      z-index: 999;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    }
-    #whatsapp-sticky img {
-      width: 30px;
-      height: 30px;
-    }
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 2rem;
-      }
-      .cta a {
-        font-size: 1rem;
-        padding: 0.75rem 1.5rem;
-      }
-      table {
-        font-size: 0.9rem;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div id="loader"></div>
-
-  <header>
-    <h1>IncomePlus</h1>
-    <p>India’s Trusted Passive Income Opportunity for Everyday Investors</p>
-  </header>
-
-  <!-- ALL LANDING PAGE CONTENT STARTS HERE -->
-
     header h1 {
       font-size: 2.5rem;
       margin: 0;
@@ -569,40 +436,4 @@ You receive a notarized loan agreement and PDC cheques. In case of any issue, th
     }
   </script>
 </body>
-</html> 
-  <div id="whatsapp-sticky">
-    <a href="https://wa.me/917066393830" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat on WhatsApp">
-    </a>
-  </div>
-
-  <div class="footer">
-    © 2025 IncomePlus | Omkar Enterprises & TRFSK Omkar Services Pvt Ltd | All Rights Reserved<br>
-    <small>
-      Investments are only accepted after formal verification and agreement. Returns are subject to the agreed plan.
-    </small>
-  </div>
-
-  <script>
-    // Loader
-    window.addEventListener("load", () => {
-      document.getElementById("loader").style.display = "none";
-    });
-
-    // Fade-in animation on scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, {
-      threshold: 0.1
-    });
-
-    document.querySelectorAll('section').forEach(section => {
-      observer.observe(section);
-    });
-  </script>
-</body>
-</html>
+</html> this is whole conent just make the changes which will make it looks professional only layout no changes in content please
