@@ -9,6 +9,7 @@
       --blue: #0c4c91;
       --light-blue: #e0ecf9;
       --gray: #f4f6f9;
+      --fade-duration: 0.8s;
     }
     * {
       box-sizing: border-box;
@@ -25,6 +26,9 @@
       color: white;
       padding: 3rem 1rem;
       text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     header h1 {
       font-size: 2.5rem;
@@ -38,6 +42,13 @@
       padding: 2rem 1rem;
       max-width: 960px;
       margin: auto;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity var(--fade-duration) ease-out, transform var(--fade-duration) ease-out;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
     h2 {
       color: var(--blue);
@@ -81,6 +92,10 @@
       border-radius: 8px;
       font-size: 1.1rem;
       display: inline-block;
+      transition: background-color 0.3s ease;
+    }
+    .cta a:hover {
+      background-color: #062f60;
     }
     .testimonial {
       background: white;
@@ -93,6 +108,10 @@
       padding: 1rem;
       border: 1px solid #ddd;
       margin-bottom: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .faq-item:hover {
+      background-color: #f0f8ff;
     }
     .faq-item strong {
       display: block;
@@ -120,10 +139,32 @@
         font-size: 1rem;
         padding: 0.75rem 1.5rem;
       }
+      table {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Your full content stays the same -->
+  <script>
+    // Fade-in animation on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+</body>
+</html>
   <header>
     <h1>IncomePlus</h1>
     <p>India’s Trusted Passive Income Opportunity for Everyday Investors</p>
