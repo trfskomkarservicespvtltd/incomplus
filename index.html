@@ -122,46 +122,6 @@
       }
     }
   </style>
-  <script>
-    function calculateReturn() {
-      var amount = parseFloat(document.getElementById("amount").value);
-      var mode = document.getElementById("mode").value;
-      if (isNaN(amount) || amount < 25000) {
-        document.getElementById("result").innerHTML = "Please enter a valid investment (min ₹25,000).";
-        document.getElementById("monthlyNote").innerHTML = "";
-        return;
-      }
-
-      let rate = 0;
-      if (amount < 100000) rate = { monthly: 2, quarterly: 2.8, half: 5.5, annual: 11 };
-      else if (amount < 300000) rate = { monthly: 2.5, quarterly: 3.6, half: 7, annual: 14 };
-      else if (amount < 700000) rate = { monthly: 3.25, quarterly: 4.5, half: 8.75, annual: 17.5 };
-      else if (amount < 1000000) rate = { monthly: 4, quarterly: 5.4, half: 10.5, annual: 21 };
-      else rate = { monthly: 4.75, quarterly: 6.3, half: 12.25, annual: 24.5 };
-
-      let cycles = 1;
-      if (mode === "monthly") cycles = 12;
-      if (mode === "quarterly") cycles = 4;
-      if (mode === "half") cycles = 2;
-      if (mode === "annual") cycles = 1;
-
-      let returnPerCycle = 0;
-      if (mode === "monthly") returnPerCycle = amount * rate.monthly / 100;
-      if (mode === "quarterly") returnPerCycle = amount * rate.quarterly / 100;
-      if (mode === "half") returnPerCycle = amount * rate.half / 100;
-      if (mode === "annual") returnPerCycle = amount * rate.annual / 100;
-
-      let totalReturn = returnPerCycle * cycles;
-      let approxMonthly = totalReturn / 12;
-
-      document.getElementById("result").innerHTML =
-        "Return per cycle: ₹" + returnPerCycle.toFixed(2) + "<br>" +
-        "Total Return over plan: ₹" + totalReturn.toFixed(2);
-
-      document.getElementById("monthlyNote").innerHTML =
-        "Note: Approx. ₹" + approxMonthly.toFixed(2) + " may be received monthly (12-month spread).";
-    }
-  </script>
 </head>
 <body>
   <header>
@@ -213,6 +173,7 @@
     <button onclick="calculateReturn()">Calculate</button>
     <p id="result" style="font-weight: bold;"></p>
     <p id="monthlyNote" style="color: #0c4c91;"></p>
+    <p id="finalPayoutNote" style="color: green; font-weight: bold;"></p>
   </section>
 
   <div class="cta">
@@ -257,21 +218,16 @@
   <section>
     <h2>🏢 Our Registered & Operational Offices</h2>
     <p>
-      <strong>We are Omkar Enterprises</strong> – Your Trusted Partner in Financial Growth
-      <br><br>
-      <strong>Parent Company:</strong> TRFSK Omkar Services Pvt. Ltd.
-      <br><br>
+      <strong>We are Omkar Enterprises</strong> – Your Trusted Partner in Financial Growth<br><br>
+      <strong>Parent Company:</strong> TRFSK Omkar Services Pvt. Ltd.<br><br>
       <strong>Head Office (Operational Office):</strong><br>
       Dnk Business Bay, 101, Katraj-Kondhwa Road,<br>
       Near Indian Oil Petrol Pump,<br>
-      Pune, Maharashtra, India 411046
-      <br><br>
+      Pune, Maharashtra, India 411046<br><br>
       <strong>Registered Office (Legal & Compliance):</strong><br>
       Own House, BK 673, Sai Baba Colony,<br>
-      Ulhasnagar, Maharashtra, India 421002
-      <br><br>
-      📍 <a href="https://g.co/kgs/NEL2WcG" target="_blank">View Us on Google Maps</a>
-      <br><br>
+      Ulhasnagar, Maharashtra, India 421002<br><br>
+      📍 <a href="https://g.co/kgs/NEL2WcG" target="_blank">View Us on Google Maps</a><br><br>
       <strong>Note:</strong> All official agreements and services are executed through our Pune Head Office.
     </p>
   </section>
@@ -282,5 +238,52 @@
       Investments are only accepted after formal verification and agreement. Returns are subject to the agreed plan.
     </small>
   </div>
+
+  <script>
+    function calculateReturn() {
+      var amount = parseFloat(document.getElementById("amount").value);
+      var mode = document.getElementById("mode").value;
+      if (isNaN(amount) || amount < 25000) {
+        document.getElementById("result").innerHTML = "Please enter a valid investment (min ₹25,000).";
+        document.getElementById("monthlyNote").innerHTML = "";
+        document.getElementById("finalPayoutNote").innerHTML = "";
+        return;
+      }
+
+      let rate = 0;
+      if (amount < 100000) rate = { monthly: 2, quarterly: 2.8, half: 5.5, annual: 11 };
+      else if (amount < 300000) rate = { monthly: 2.5, quarterly: 3.6, half: 7, annual: 14 };
+      else if (amount < 700000) rate = { monthly: 3.25, quarterly: 4.5, half: 8.75, annual: 17.5 };
+      else if (amount < 1000000) rate = { monthly: 4, quarterly: 5.4, half: 10.5, annual: 21 };
+      else rate = { monthly: 4.75, quarterly: 6.3, half: 12.25, annual: 24.5 };
+
+      let cycles = 1;
+      if (mode === "monthly") cycles = 12;
+      if (mode === "quarterly") cycles = 4;
+      if (mode === "half") cycles = 2;
+      if (mode === "annual") cycles = 1;
+
+      let returnPerCycle = 0;
+      if (mode === "monthly") returnPerCycle = amount * rate.monthly / 100;
+      if (mode === "quarterly") returnPerCycle = amount * rate.quarterly / 100;
+      if (mode === "half") returnPerCycle = amount * rate.half / 100;
+      if (mode === "annual") returnPerCycle = amount * rate.annual / 100;
+
+      let totalReturn = returnPerCycle * cycles;
+      let approxMonthly = totalReturn / 12;
+      let monthlyPayout = (amount + totalReturn) / 12;
+
+      document.getElementById("result").innerHTML =
+        "Return per cycle: ₹" + returnPerCycle.toFixed(2) + "<br>" +
+        "Total Return over plan: ₹" + totalReturn.toFixed(2);
+
+      document.getElementById("monthlyNote").innerHTML =
+        "Note: Approx. ₹" + approxMonthly.toFixed(2) + " may be received monthly (12-month spread of return only).";
+
+      document.getElementById("finalPayoutNote").innerHTML =
+        "✅ Total Payout (Capital + Interest): ₹" + (amount + totalReturn).toFixed(2) + "<br>" +
+        "➡️ You will receive approx. ₹" + monthlyPayout.toFixed(2) + " per month for 12 months (Capital + Profit).";
+    }
+  </script>
 </body>
 </html>
