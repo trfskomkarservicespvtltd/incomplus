@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>IncomePlus Admin</title>
+  <script>
+    function login() {
+      const pass = document.getElementById('password').value;
+      if(pass === 'incomeplus-admin-2025') {
+        document.getElementById('login-box').style.display = 'none';
+        document.getElementById('admin-panel').style.display = 'block';
+      } else {
+        alert('Wrong password');
+      }
+    }
+    function addCall() {
+      const call = document.getElementById('call-input').value;
+      if(call) {
+        let calls = JSON.parse(localStorage.getItem('calls')) || [];
+        calls.push(call);
+        localStorage.setItem('calls', JSON.stringify(calls));
+        document.getElementById('call-input').value = '';
+        renderCalls();
+      }
+    }
+    function renderCalls() {
+      const list = document.getElementById('calls-list');
+      list.innerHTML = '';
+      let calls = JSON.parse(localStorage.getItem('calls')) || [];
+      calls.forEach((c, i) => {
+        let li = document.createElement('li');
+        li.textContent = c;
+        list.appendChild(li);
+      });
+    }
+    window.onload = renderCalls;
+  </script>
+</head>
+<body>
+  <div id='login-box'>
+    <h2>Admin Login</h2>
+    <input type='password' id='password' placeholder='Password'>
+    <button onclick='login()'>Login</button>
+  </div>
+  <div id='admin-panel' style='display:none;'>
+    <h2>Manage Calls</h2>
+    <input type='text' id='call-input' placeholder='Enter new stock call'>
+    <button onclick='addCall()'>Add Call</button>
+    <ul id='calls-list'></ul>
+  </div>
+</body>
+</html>
