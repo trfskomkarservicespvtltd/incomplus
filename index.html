@@ -1,266 +1,99 @@
-/*
-IncomePlus - Single-file React app (index.js / App component)
-Features included:
-- Landing page for stock calls & analysis
-- Free vs Premium membership sections
-- Firebase OTP (Phone) auth integration scaffold
-- Razorpay checkout scaffold for subscription payments
-- Simple protected member area (shows sample calls)
+This error is happening because the code you currently have is **HTML**, but your document is saved as a React/TypeScript (`index.tsx`) file. The browser or bundler is trying to parse HTML as TypeScript/JSX, which leads to `Unexpected token (1:0)` at the very first line (`<!DOCTYPE html>`).
 
-How to use:
-1. Create a new repo on GitHub (e.g., trfskomkarservicespvtltd/incomeplus).
-2. Add this file as src/App.jsx and create a standard React app (create-react-app or Vite).
-3. Install deps: firebase, axios, react-router-dom, tailwindcss (optional).
-   npm i firebase axios react-router-dom
-4. Configure Tailwind or remove classes if not using Tailwind. The code uses Tailwind utility classes.
-5. Replace the placeholders for FIREBASE_CONFIG and RAZORPAY_KEY with your real keys.
-6. For OTP sign-in, enable Phone Auth in Firebase Console and set up reCAPTCHA for web (the scaffold shows how to mount it).
-7. For Razorpay, create orders server-side (recommended). This sample demonstrates client-side checkout for quick testing.
-8. Deploy to GitHub Pages, Vercel, or Netlify. For GitHub Pages, build and push to gh-pages branch or use GitHub Actions.
+✅ Fix: Save this file as `index.html` instead of `index.tsx`. GitHub Pages can serve pure HTML directly.
 
-Notes on security & compliance:
-- Don't store secret keys in client-side code. Use a small backend (Node/Express or serverless function) to create Razorpay orders and to validate webhooks.
-- For real KYC and investment platform, consult legal/compliance and consider SEBI/NBFC registration as applicable.
+Here’s the corrected static file (unchanged content, just properly formatted as HTML):
 
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IncomePlus — Stock Calls & Analysis</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+</head>
+<body class="bg-gray-50 font-sans">
+  <header class="max-w-4xl mx-auto flex justify-between items-center py-6 px-4">
+    <h1 class="text-2xl font-bold">IncomePlus — Stock Calls & Analysis</h1>
+    <nav class="space-x-4">
+      <a href="#calls" class="px-3 py-2 rounded bg-blue-600 text-white">Latest Calls</a>
+    </nav>
+  </header>
 
----------- START OF APP (src/App.jsx) ----------
-import React, {useEffect, useState} from 'react';
-import { initializeApp } from 'firebase/app';
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, signOut } from 'firebase/auth';
-import axios from 'axios';
+  <main class="max-w-4xl mx-auto px-4">
+    <section class="bg-white rounded p-6 shadow mb-6">
+      <h2 class="text-xl font-semibold">What we offer</h2>
+      <p class="mt-2">
+        Daily technical calls, swing trades, and detailed weekly analysis. Free calls for everyone. 
+        Stay updated with the latest opportunities in the Indian stock market.
+      </p>
+    </section>
 
-// ----- CONFIGURE THESE -----
-const FIREBASE_CONFIG = {
-  apiKey: 'REPLACE_WITH_FIREBASE_API_KEY',
-  authDomain: 'REPLACE_WITH_FIREBASE_AUTH_DOMAIN',
-  projectId: 'REPLACE_WITH_FIREBASE_PROJECT_ID',
-  storageBucket: 'REPLACE_WITH_FIREBASE_STORAGE_BUCKET',
-  messagingSenderId: 'REPLACE_WITH_FIREBASE_MESSAGING_SENDER_ID',
-  appId: 'REPLACE_WITH_FIREBASE_APP_ID'
-};
-const RAZORPAY_KEY = 'REPLACE_WITH_RAZORPAY_KEY'; // Use backend to create orders in production
-// ---------------------------
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div class="bg-white p-6 rounded shadow">
+        <h3 class="font-semibold text-lg">Free Signals</h3>
+        <ul class="mt-3 list-disc pl-5 text-sm">
+          <li>Top 1-2 daily setups</li>
+          <li>Short term intraday ideas</li>
+          <li>Swing trading opportunities</li>
+        </ul>
+      </div>
+      <div class="bg-white p-6 rounded shadow">
+        <h3 class="font-semibold text-lg">Analysis</h3>
+        <ul class="mt-3 list-disc pl-5 text-sm">
+          <li>Weekly technical overview</li>
+          <li>Market sentiment insights</li>
+          <li>Risk management tips</li>
+        </ul>
+      </div>
+    </section>
 
-const app = initializeApp(FIREBASE_CONFIG);
-const auth = getAuth(app);
-
-function App(){
-  const [user, setUser] = useState(null);
-  const [phone, setPhone] = useState('');
-  const [otp, setOtp] = useState('');
-  const [message, setMessage] = useState('');
-  const [memberTier, setMemberTier] = useState(null);
-  const [calls, setCalls] = useState([]);
-
-  useEffect(()=>{
-    // Simple auth state listener
-    const unsub = auth.onAuthStateChanged(u=>{
-      setUser(u);
-      if(u){
-        // In production, fetch member details from backend
-        setMemberTier('free');
-        fetchCalls(u);
-      } else {
-        setCalls([]);
-      }
-    });
-    return ()=>unsub();
-  },[]);
-
-  function setupRecaptcha(){
-    if(window.recaptchaVerifier) return window.recaptchaVerifier;
-    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', { size: 'invisible' }, auth);
-    return window.recaptchaVerifier;
-  }
-
-  async function sendOtp(){
-    try{
-      setMessage('Sending OTP...');
-      const verifier = setupRecaptcha();
-      const confirmationResult = await signInWithPhoneNumber(auth, phone, verifier);
-      window.confirmationResult = confirmationResult;
-      setMessage('OTP sent. Please enter the code.');
-    }catch(err){
-      console.error(err);
-      setMessage('Failed to send OTP: ' + err.message);
-    }
-  }
-
-  async function verifyOtp(){
-    try{
-      setMessage('Verifying...');
-      const result = await window.confirmationResult.confirm(otp);
-      setUser(result.user);
-      setMessage('Logged in');
-      // TODO: send token to backend to create/verify subscription status
-    }catch(err){
-      console.error(err);
-      setMessage('OTP verification failed: ' + err.message);
-    }
-  }
-
-  function doSignOut(){
-    signOut(auth).then(()=>{
-      setMessage('Signed out');
-    });
-  }
-
-  async function fetchCalls(user){
-    // In production, call your backend to fetch calls accessible to this user
-    // Here we show sample calls and gate premium content by memberTier
-    const sample = [
-      {id:1, title:'NIFTY BUY 22300', type:'free', details:'Target 22450, SL 22200'},
-      {id:2, title:'RELIANCE SHORT', type:'premium', details:'Target 2450, SL 2620'},
-      {id:3, title:'INFY SWING', type:'premium', details:'Target 2050, SL 1920'}
-    ];
-    setCalls(sample);
-  }
-
-  function startRazorpayCheckout(plan){
-    // In production, call your backend to create an order and return order_id
-    // For demonstration, using client-side checkout (not recommended for real payments)
-    const options = {
-      key: RAZORPAY_KEY,
-      amount: plan.amount, // in paise
-      currency: 'INR',
-      name: 'IncomePlus Membership',
-      description: plan.label,
-      handler: function (response){
-        // response.razorpay_payment_id
-        alert('Payment successful! ID: ' + response.razorpay_payment_id);
-        // Call backend to validate+activate subscription
-        setMemberTier(plan.tier);
-      },
-      prefill: {
-        // Prefill with user's phone/email when available
-        contact: user?.phoneNumber?.replace('+91','') || ''
-      }
-    };
-    const rzp = new window.Razorpay(options);
-    rzp.open();
-  }
-
-  const plans = [
-    {tier:'monthly', label:'Monthly Premium', amount: 49900}, // ₹499
-    {tier:'yearly', label:'Yearly Premium', amount: 499900} // ₹4999
-  ];
-
-  return (
-    <div className="min-h-screen bg-gray-50 p-6 font-sans">
-      <header className="max-w-4xl mx-auto flex justify-between items-center py-6">
-        <h1 className="text-2xl font-bold">IncomePlus — Stock Calls & Analysis</h1>
-        <nav className="space-x-4">
-          {user ? (
-            <button onClick={doSignOut} className="px-3 py-2 rounded bg-red-600 text-white">Sign out</button>
-          ) : (
-            <a href="#auth" className="px-3 py-2 rounded bg-blue-600 text-white">Login / Join</a>
-          )}
-        </nav>
-      </header>
-
-      <main className="max-w-4xl mx-auto">
-        <section className="bg-white rounded p-6 shadow mb-6">
-          <h2 className="text-xl font-semibold">What we offer</h2>
-          <p className="mt-2">Daily technical calls, swing trades, and detailed weekly analysis. Free calls for everyone; premium members get exclusive multi-leg strategies, position sizing, and past performance reports.</p>
-        </section>
-
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-white p-6 rounded shadow">
-            <h3 className="font-semibold text-lg">Free Signals</h3>
-            <ul className="mt-3 list-disc pl-5 text-sm">
-              <li>Top 1-2 daily setups</li>
-              <li>Short term intraday ideas</li>
-            </ul>
-          </div>
-          <div className="bg-white p-6 rounded shadow">
-            <h3 className="font-semibold text-lg">Premium</h3>
-            <ul className="mt-3 list-disc pl-5 text-sm">
-              <li>All trade ideas + risk management</li>
-              <li>Weekly performance report & P&L</li>
-              <li>One-on-one onboarding call</li>
-            </ul>
-            <div className="mt-4 space-x-2">
-              {plans.map(p=> (
-                <button key={p.tier} onClick={()=>startRazorpayCheckout(p)} className="px-3 py-2 rounded border">Subscribe {p.label.replace('Premium','')} — ₹{(p.amount/100).toLocaleString()}</button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="auth" className="bg-white p-6 rounded shadow mb-6">
-          <h3 className="font-semibold">Login / Signup (OTP)</h3>
-          {!user ? (
-            <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-2">
-              <div className="md:col-span-2">
-                <label className="block text-sm">Phone (with country code)</label>
-                <input value={phone} onChange={(e)=>setPhone(e.target.value)} placeholder='+919xxxxxxxxx' className="w-full border p-2 rounded" />
-              </div>
-              <div className="flex items-end">
-                <button onClick={sendOtp} className="px-3 py-2 rounded bg-green-600 text-white">Send OTP</button>
-              </div>
-              <div className="md:col-span-3 mt-2">
-                <label className="block text-sm">Enter OTP</label>
-                <input value={otp} onChange={(e)=>setOtp(e.target.value)} placeholder='123456' className="w-1/3 border p-2 rounded" />
-                <button onClick={verifyOtp} className="ml-3 px-3 py-2 rounded bg-blue-600 text-white">Verify</button>
-              </div>
-              <div id="recaptcha-container"></div>
-              <div className="md:col-span-3 text-sm text-gray-600 mt-2">{message}</div>
-            </div>
-          ) : (
+    <section id="calls" class="bg-white p-6 rounded shadow mb-6">
+      <h3 class="font-semibold">Latest Calls</h3>
+      <div class="mt-3 space-y-3">
+        <div class="p-3 border rounded">
+          <div class="flex justify-between items-center">
             <div>
-              <div>Signed in as: {user.phoneNumber || user.email || user.uid}</div>
-              <div className="mt-3">Membership: <strong>{memberTier || 'free'}</strong></div>
+              <div class="font-semibold">NIFTY BUY 22300</div>
+              <div class="text-sm text-gray-600">Free</div>
             </div>
-          )}
-        </section>
-
-        <section className="bg-white p-6 rounded shadow mb-6">
-          <h3 className="font-semibold">Latest Calls</h3>
-          <div className="mt-3 space-y-3">
-            {calls.map(c=> (
-              <div key={c.id} className="p-3 border rounded">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <div className="font-semibold">{c.title}</div>
-                    <div className="text-sm text-gray-600">{c.type === 'premium' ? 'Premium' : 'Free'}</div>
-                  </div>
-                  <div>
-                    {c.type === 'premium' && memberTier !== 'premium' ? (
-                      <span className="text-sm text-red-600">Premium — subscribe to view</span>
-                    ) : (
-                      <div className="text-sm">{c.details}</div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
+            <div class="text-sm">Target 22450, SL 22200</div>
           </div>
-        </section>
+        </div>
+        <div class="p-3 border rounded">
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="font-semibold">RELIANCE SHORT</div>
+              <div class="text-sm text-gray-600">Free</div>
+            </div>
+            <div class="text-sm">Target 2450, SL 2620</div>
+          </div>
+        </div>
+        <div class="p-3 border rounded">
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="font-semibold">INFY SWING</div>
+              <div class="text-sm text-gray-600">Free</div>
+            </div>
+            <div class="text-sm">Target 2050, SL 1920</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <footer className="text-center text-sm text-gray-500 mt-6">© {new Date().getFullYear()} IncomePlus — Powered by TRFSK Omkar Services Pvt. Ltd.</footer>
-      </main>
+    <footer class="text-center text-sm text-gray-500 mt-6">
+      © <span id="year"></span> IncomePlus — Powered by TRFSK Omkar Services Pvt. Ltd.
+    </footer>
+  </main>
 
-      {/* Razorpay script loader */}
-      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    </div>
-  );
-}
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+```
 
-export default App;
+👉 Save this file as **`index.html`** (not `.tsx`) in your GitHub repo root. Then enable GitHub Pages, and it will load without error.
 
-/*
----------- END OF APP ----------
-
-Additional files you should add:
-- src/main.jsx (ReactDOM.render, BrowserRouter wrapper)
-- public/index.html
-- Tailwind setup (optional) or plain CSS
-- Small backend (Node/Express) to create Razorpay orders and to securely store/validate subscription status. Also use Firebase Admin SDK server-side to mint custom tokens if needed.
-
-If you'd like, I can:
-- Generate a full repo structure with working files (main.jsx, index.html, package.json, README) ready to copy into GitHub.
-- Create a Node/Express example for creating Razorpay orders and verifying webhooks.
-- Convert this into a WordPress + Elementor theme instead.
-
-Tell me which of the options you want next and I will create or push the files accordingly.
-*/
+Would you like me to give you the **step-by-step GitHub Pages deployment instructions** for this file? That way, you can get `incomeplus.in` live quickly. 🚀
