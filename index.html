@@ -1,516 +1,266 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IncomePlus - Passive Income Made Simple</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --blue: #0c4c91;
-      --light-blue: #e0ecf9;
-      --gray: #f4f6f9;
-      --white: #ffffff;
-      --green: #28a745;
-    }
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f8fafc;
-      color: #333;
-    }
-    header {
-      background: linear-gradient(to right, #0c4c91, #2980b9);
-      color: #fff;
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-    header h1 {
-      font-size: 1.8rem;
-      margin: 0;
-    }
-    nav a {
-      color: #fff;
-      margin-left: 1.5rem;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .hero {
-      background-color: #e9f4ff;
-      padding: 3rem 2rem;
-      text-align: center;
-      border-radius: 12px;
-      margin: 2rem auto;
-      max-width: 1000px;
-    }
-    .hero h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #0c4c91;
-    }
-    .hero p {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-    }
-    .hero .buttons a {
-      display: inline-block;
-      margin: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
-    }
-    .hero .btn-primary {
-      background-color: #0c4c91;
-      color: white;
-    }
-    .hero .btn-success {
-      background-color: #28a745;
-      color: white;
-    }
-    section {
-      max-width: 1000px;
-      margin: 2rem auto;
-      padding: 0 2rem;
-    }
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-    }
-    .feature-box {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      text-align: center;
-    }
-    .feature-box h4 {
-      margin-top: 1rem;
-      color: #0c4c91;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    th, td {
-      padding: 1rem;
-      text-align: center;
-      border: 1px solid #ddd;
-    }
-    th {
-      background-color: #e0ecf9;
-      font-weight: bold;
-    }
-    .calculator input, .calculator select, .calculator button {
-      padding: 0.5rem;
-      margin: 0.5rem 0;
-      width: 100%;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    .cta, .testimonial, .faq-item {
-      background: white;
-      padding: 1rem;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    .footer {
-      background-color: #0c4c91;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-    }
-    #whatsapp-sticky {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #25d366;
-      color: white;
-      border-radius: 50%;
-      padding: 15px;
-      z-index: 999;
-    }
-    #whatsapp-sticky img {
-      width: 30px;
-      height: 30px;
-    }
+/*
+IncomePlus - Single-file React app (index.js / App component)
+Features included:
+- Landing page for stock calls & analysis
+- Free vs Premium membership sections
+- Firebase OTP (Phone) auth integration scaffold
+- Razorpay checkout scaffold for subscription payments
+- Simple protected member area (shows sample calls)
 
-    /* Mobile Friendly Adjustments */
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
+How to use:
+1. Create a new repo on GitHub (e.g., trfskomkarservicespvtltd/incomeplus).
+2. Add this file as src/App.jsx and create a standard React app (create-react-app or Vite).
+3. Install deps: firebase, axios, react-router-dom, tailwindcss (optional).
+   npm i firebase axios react-router-dom
+4. Configure Tailwind or remove classes if not using Tailwind. The code uses Tailwind utility classes.
+5. Replace the placeholders for FIREBASE_CONFIG and RAZORPAY_KEY with your real keys.
+6. For OTP sign-in, enable Phone Auth in Firebase Console and set up reCAPTCHA for web (the scaffold shows how to mount it).
+7. For Razorpay, create orders server-side (recommended). This sample demonstrates client-side checkout for quick testing.
+8. Deploy to GitHub Pages, Vercel, or Netlify. For GitHub Pages, build and push to gh-pages branch or use GitHub Actions.
+
+Notes on security & compliance:
+- Don't store secret keys in client-side code. Use a small backend (Node/Express or serverless function) to create Razorpay orders and to validate webhooks.
+- For real KYC and investment platform, consult legal/compliance and consider SEBI/NBFC registration as applicable.
+
+
+---------- START OF APP (src/App.jsx) ----------
+import React, {useEffect, useState} from 'react';
+import { initializeApp } from 'firebase/app';
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, signOut } from 'firebase/auth';
+import axios from 'axios';
+
+// ----- CONFIGURE THESE -----
+const FIREBASE_CONFIG = {
+  apiKey: 'REPLACE_WITH_FIREBASE_API_KEY',
+  authDomain: 'REPLACE_WITH_FIREBASE_AUTH_DOMAIN',
+  projectId: 'REPLACE_WITH_FIREBASE_PROJECT_ID',
+  storageBucket: 'REPLACE_WITH_FIREBASE_STORAGE_BUCKET',
+  messagingSenderId: 'REPLACE_WITH_FIREBASE_MESSAGING_SENDER_ID',
+  appId: 'REPLACE_WITH_FIREBASE_APP_ID'
+};
+const RAZORPAY_KEY = 'REPLACE_WITH_RAZORPAY_KEY'; // Use backend to create orders in production
+// ---------------------------
+
+const app = initializeApp(FIREBASE_CONFIG);
+const auth = getAuth(app);
+
+function App(){
+  const [user, setUser] = useState(null);
+  const [phone, setPhone] = useState('');
+  const [otp, setOtp] = useState('');
+  const [message, setMessage] = useState('');
+  const [memberTier, setMemberTier] = useState(null);
+  const [calls, setCalls] = useState([]);
+
+  useEffect(()=>{
+    // Simple auth state listener
+    const unsub = auth.onAuthStateChanged(u=>{
+      setUser(u);
+      if(u){
+        // In production, fetch member details from backend
+        setMemberTier('free');
+        fetchCalls(u);
+      } else {
+        setCalls([]);
       }
-      nav {
-        margin-top: 0.5rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-      nav a {
-        margin-left: 0;
-      }
-      .hero h2 {
-        font-size: 1.5rem;
-      }
-      .hero p {
-        font-size: 1rem;
-      }
-      table th, table td {
-        padding: 0.5rem;
-        font-size: 0.9rem;
-      }
-      .hero .buttons a {
-        width: 100%;
-        text-align: center;
-        margin: 0.25rem 0;
-      }
+    });
+    return ()=>unsub();
+  },[]);
+
+  function setupRecaptcha(){
+    if(window.recaptchaVerifier) return window.recaptchaVerifier;
+    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', { size: 'invisible' }, auth);
+    return window.recaptchaVerifier;
+  }
+
+  async function sendOtp(){
+    try{
+      setMessage('Sending OTP...');
+      const verifier = setupRecaptcha();
+      const confirmationResult = await signInWithPhoneNumber(auth, phone, verifier);
+      window.confirmationResult = confirmationResult;
+      setMessage('OTP sent. Please enter the code.');
+    }catch(err){
+      console.error(err);
+      setMessage('Failed to send OTP: ' + err.message);
     }
+  }
 
-    @media (max-width: 480px) {
-      .feature-box {
-        padding: 1rem;
-      }
-      .feature-box h4 {
-        font-size: 1rem;
-      }
-      .hero {
-        padding: 2rem 1rem;
-      }
-      .calculator input, .calculator select, .calculator button {
-        font-size: 0.9rem;
-      }
+  async function verifyOtp(){
+    try{
+      setMessage('Verifying...');
+      const result = await window.confirmationResult.confirm(otp);
+      setUser(result.user);
+      setMessage('Logged in');
+      // TODO: send token to backend to create/verify subscription status
+    }catch(err){
+      console.error(err);
+      setMessage('OTP verification failed: ' + err.message);
     }
-  </style>
-</head>
-<body>
-  <!-- Your original body content stays exactly as is --><!DOCTYPE html>  <html lang="en">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
-  <title>IncomePlus - Passive Income Made Simple</title>  
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">  
-  <style>  
-    :root {  
-      --blue: #0c4c91;  
-      --light-blue: #e0ecf9;  
-      --gray: #f4f6f9;  
-      --white: #ffffff;  
-      --green: #28a745;  
-    }  
-    * {  
-      box-sizing: border-box;  
-    }  
-    body {  
-      font-family: 'Inter', sans-serif;  
-      margin: 0;  
-      padding: 0;  
-      background-color: #f8fafc;  
-      color: #333;  
-    }  
-    header {  
-      background: linear-gradient(to right, #0c4c91, #2980b9);  
-      color: #fff;  
-      padding: 1rem 2rem;  
-      position: sticky;  
-      top: 0;  
-      z-index: 999;  
-      display: flex;  
-      align-items: center;  
-      justify-content: space-between;  
-      flex-wrap: wrap;  
-    }  
-    header h1 {  
-      font-size: 1.8rem;  
-      margin: 0;  
-    }  
-    nav a {  
-      color: #fff;  
-      margin-left: 1.5rem;  
-      text-decoration: none;  
-      font-weight: 500;  
-    }  
-    .hero {  
-      background-color: #e9f4ff;  
-      padding: 3rem 2rem;  
-      text-align: center;  
-      border-radius: 12px;  
-      margin: 2rem auto;  
-      max-width: 1000px;  
-    }  
-    .hero h2 {  
-      font-size: 2rem;  
-      margin-bottom: 1rem;  
-      color: #0c4c91;  
-    }  
-    .hero p {  
-      font-size: 1.1rem;  
-      margin-bottom: 2rem;  
-    }  
-    .hero .buttons a {  
-      display: inline-block;  
-      margin: 0.5rem;  
-      padding: 0.75rem 1.5rem;  
-      border-radius: 8px;  
-      font-weight: 600;  
-      text-decoration: none;  
-    }  
-    .hero .btn-primary {  
-      background-color: #0c4c91;  
-      color: white;  
-    }  
-    .hero .btn-success {  
-      background-color: #28a745;  
-      color: white;  
-    }  
-    section {  
-      max-width: 1000px;  
-      margin: 2rem auto;  
-      padding: 0 2rem;  
-    }  
-    .features {  
-      display: grid;  
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));  
-      gap: 1rem;  
-    }  
-    .feature-box {  
-      background: white;  
-      padding: 1.5rem;  
-      border-radius: 10px;  
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);  
-      text-align: center;  
-    }  
-    .feature-box h4 {  
-      margin-top: 1rem;  
-      color: #0c4c91;  
-    }  
-    table {  
-      width: 100%;  
-      border-collapse: collapse;  
-      margin-top: 1rem;  
-      background: white;  
-      border-radius: 10px;  
-      overflow: hidden;  
-    }  
-    th, td {  
-      padding: 1rem;  
-      text-align: center;  
-      border: 1px solid #ddd;  
-    }  
-    th {  
-      background-color: #e0ecf9;  
-      font-weight: bold;  
-    }  
-    .calculator input, .calculator select, .calculator button {  
-      padding: 0.5rem;  
-      margin: 0.5rem 0;  
-      width: 100%;  
-      border-radius: 5px;  
-      border: 1px solid #ccc;  
-    }  
-    .cta, .testimonial, .faq-item {  
-      background: white;  
-      padding: 1rem;  
-      border-radius: 10px;  
-      margin-bottom: 1rem;  
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);  
-    }  
-    .footer {  
-      background-color: #0c4c91;  
-      color: white;  
-      text-align: center;  
-      padding: 1rem;  
-    }  
-    #whatsapp-sticky {  
-      position: fixed;  
-      bottom: 20px;  
-      right: 20px;  
-      background-color: #25d366;  
-      color: white;  
-      border-radius: 50%;  
-      padding: 15px;  
-      z-index: 999;  
-    }  
-    #whatsapp-sticky img {  
-      width: 30px;  
-      height: 30px;  
-    }  
-  </style>  
-</head>  
-<body>  
-  <header>  
-    <h1>💰 IncomePlus</h1>  
-    <nav>  
-      <a href="#why">Why Us</a>  
-      <a href="#plans">Plans</a>  
-      <a href="#calculator">Calculator</a>  
-      <a href="#testimonials">Testimonials</a>  
-    </nav>  
-  </header>    <div class="hero">  
-    <h2>Secure Your Financial Future with IncomePlus</h2>  
-    <p>Get fixed returns up to 24.5% annually with our transparent and professionally managed investment plans.</p>  
-    <div class="buttons">  
-      <a href="#calculator" class="btn-primary">Calculate Your Returns</a>  
-      <a href="https://wa.me/917066393830" class="btn-success" target="_blank">Contact Us</a>  
-    </div>  
-  </div>    <section id="why">  
-    <h2>🌟 Why Choose IncomePlus?</h2>  
-    <div class="features">  
-      <div class="feature-box">  
-        <h4>Low Entry Barrier</h4>  
-        <p>Start from just ₹25,000 – earn monthly, quarterly or yearly returns based on your preference.</p>  
-      </div>  
-      <div class="feature-box">  
-        <h4>High Fixed Returns</h4>  
-        <p>Enjoy fixed returns up to 24.5% annually, significantly higher than traditional investment options.</p>  
-      </div>  
-      <div class="feature-box">  
-        <h4>Transparent & Secure</h4>  
-        <p>Our investment process is transparent, secure and professionally managed for your peace of mind.</p>  
-      </div>  
-      <div class="feature-box">  
-        <h4>Trusted Community</h4>  
-        <p>Join our community of 500+ satisfied investors from across India who trust us with their investments.</p>  
-      </div>  
-    </div>  
-  </section>    <section id="plans">  
-    <h2>📊 Investment Plans</h2>  
-    <table>  
-      <thead>  
-        <tr>  
-          <th>Investment Amount (₹)</th>  
-          <th>Monthly</th>  
-          <th>Quarterly</th>  
-          <th>Half-Yearly</th>  
-          <th>Annually</th>  
-        </tr>  
-      </thead>  
-      <tbody>  
-        <tr><td>₹25,000 – ₹99,000</td><td>2%</td><td>2.8%</td><td>5.5%</td><td>11%</td></tr>  
-        <tr><td>₹1L – ₹2.99L</td><td>2.5%</td><td>3.6%</td><td>7%</td><td>14%</td></tr>  
-        <tr><td>₹3L – ₹6.99L</td><td>3.25%</td><td>4.5%</td><td>8.75%</td><td>17.5%</td></tr>  
-        <tr><td>₹7L – ₹9.99L</td><td>4%</td><td>5.4%</td><td>10.5%</td><td>21%</td></tr>  
-        <tr><td>₹10L – ₹14.99L</td><td>4.75%</td><td>6.3%</td><td>12.25%</td><td>24.5%</td></tr>  
-      </tbody>  
-    </table>  
-  </section>    <section id="calculator" class="calculator">  
-    <h2>🧮 Return Calculator</h2>  
-    <input type="number" id="amount" placeholder="Enter Investment Amount (₹)" />  
-    <select id="mode">  
-      <option value="monthly">Monthly</option>  
-      <option value="quarterly">Quarterly</option>  
-      <option value="half">Half-Yearly</option>  
-      <option value="annual">Annually</option>  
-    </select>  
-    <button onclick="calculateReturn()">Calculate</button>  
-    <p id="result"></p>  
-    <p id="monthlyNote"></p>  
-    <p id="finalPayoutNote"></p>  
-  </section>    <section id="testimonials">  
-    <h2>💬 Testimonials</h2>  
-    <div class="testimonial">  
-      <p><em>"Outstanding support! I’ve achieved my goals and feel more secure about the future."</em></p>  
-      <p><strong>– Laxmikanta Mohanty, Bhubneshwar</strong></p>  
-    </div>  
-    <div class="testimonial">  
-      <p><em>"Remarkable growth in my investments. Omkar Enterprises made my financial dreams a reality!"</em></p>  
-      <p><strong>– Ishita Jadhav, Nagpur</strong></p>  
-    </div>  
-    <div class="testimonial">  
-      <p><em>"Returns are fixed and timely. I’ve used the income to support my household and small business."</em></p>  
-      <p><strong>– Ruthvik URS, Bangalore</strong></p>  
-    </div>  
-  </section>    <section>  
-    <h2>❓ Frequently Asked Questions</h2>  
-    <div class="faq-item">  
-      <strong>How does the investment work?</strong>  
-      <p>We sign a notarized loan agreement and provide PDCs. You receive monthly income and capital back in 13th month.</p>  
-    </div>  
-    <div class="faq-item">  
-      <strong>Where will you use our investment?</strong>  
-      <p>Funds are invested in long-term equity holdings based on 15+ years experience with no high-risk trading.</p>  
-    </div>  
-    <div class="faq-item">  
-      <strong>What documents are provided?</strong>  
-      <p>You receive a notarized loan agreement and post-dated cheques (PDCs) for legal security.</p>  
-    </div>  
-  </section>    <div id="whatsapp-sticky">  
-    <a href="https://wa.me/917066393830" target="_blank">  
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">  
-    </a>  
-  </div>    <div class="footer">  
-    © 2025 IncomePlus | Omkar Enterprises & TRFSK Omkar Services Pvt Ltd<br>  
-    <small>Investments are accepted only after formal verification and legal agreement.</small>  
-  </div>    <script>  
-    function calculateReturn() {  
-      var amount = parseFloat(document.getElementById("amount").value);  
-      var mode = document.getElementById("mode").value;  
-      if (isNaN(amount) || amount < 25000) {  
-        document.getElementById("result").innerHTML = "Please enter ₹25,000 or more.";  
-        return;  
-      }  
-      let rate = 0;  
-      if (amount < 100000) rate = { monthly: 2, quarterly: 2.8, half: 5.5, annual: 11 };  
-      else if (amount < 300000) rate = { monthly: 2.5, quarterly: 3.6, half: 7, annual: 14 };  
-      else if (amount < 700000) rate = { monthly: 3.25, quarterly: 4.5, half: 8.75, annual: 17.5 };  
-      else if (amount < 1000000) rate = { monthly: 4, quarterly: 5.4, half: 10.5, annual: 21 };  
-      else rate = { monthly: 4.75, quarterly: 6.3, half: 12.25, annual: 24.5 };  
-  
-      let cycles = mode === "monthly" ? 12 : mode === "quarterly" ? 4 : mode === "half" ? 2 : 1;  
-      let returnPerCycle = amount * rate[mode] / 100;  
-      let totalReturn = returnPerCycle * cycles;  
-      let monthlyPayout = (amount + totalReturn) / 12;  
-  
-      document.getElementById("result").innerHTML = `Return per cycle: ₹${returnPerCycle.toFixed(2)}<br>Total Return: ₹${totalReturn.toFixed(2)}`;  
-      document.getElementById("monthlyNote").innerHTML = `Approx. monthly return: ₹${(totalReturn / 12).toFixed(2)}`;  
-      document.getElementById("finalPayoutNote").innerHTML = `Total payout (capital + interest): ₹${(amount + totalReturn).toFixed(2)}\nMonthly: ₹${monthlyPayout.toFixed(2)}`;  
-    }  
-  </script>  </body>  
-</html> "can you regenerate whole html file only add mobile friendly view to the code keep all as it is"  
-  <!-- [Body content same as previous version you posted above] -->
-  <!-- [No need to re-include here, as only the CSS was updated for responsiveness] -->
+  }
 
-  <!-- Include your existing script as-is -->
-  <script>
-    function calculateReturn() {
-      var amount = parseFloat(document.getElementById("amount").value);
-      var mode = document.getElementById("mode").value;
-      if (isNaN(amount) || amount < 25000) {
-        document.getElementById("result").innerHTML = "Please enter ₹25,000 or more.";
-        return;
+  function doSignOut(){
+    signOut(auth).then(()=>{
+      setMessage('Signed out');
+    });
+  }
+
+  async function fetchCalls(user){
+    // In production, call your backend to fetch calls accessible to this user
+    // Here we show sample calls and gate premium content by memberTier
+    const sample = [
+      {id:1, title:'NIFTY BUY 22300', type:'free', details:'Target 22450, SL 22200'},
+      {id:2, title:'RELIANCE SHORT', type:'premium', details:'Target 2450, SL 2620'},
+      {id:3, title:'INFY SWING', type:'premium', details:'Target 2050, SL 1920'}
+    ];
+    setCalls(sample);
+  }
+
+  function startRazorpayCheckout(plan){
+    // In production, call your backend to create an order and return order_id
+    // For demonstration, using client-side checkout (not recommended for real payments)
+    const options = {
+      key: RAZORPAY_KEY,
+      amount: plan.amount, // in paise
+      currency: 'INR',
+      name: 'IncomePlus Membership',
+      description: plan.label,
+      handler: function (response){
+        // response.razorpay_payment_id
+        alert('Payment successful! ID: ' + response.razorpay_payment_id);
+        // Call backend to validate+activate subscription
+        setMemberTier(plan.tier);
+      },
+      prefill: {
+        // Prefill with user's phone/email when available
+        contact: user?.phoneNumber?.replace('+91','') || ''
       }
-      let rate = 0;
-      if (amount < 100000) rate = { monthly: 2, quarterly: 2.8, half: 5.5, annual: 11 };
-      else if (amount < 300000) rate = { monthly: 2.5, quarterly: 3.6, half: 7, annual: 14 };
-      else if (amount < 700000) rate = { monthly: 3.25, quarterly: 4.5, half: 8.75, annual: 17.5 };
-      else if (amount < 1000000) rate = { monthly: 4, quarterly: 5.4, half: 10.5, annual: 21 };
-      else rate = { monthly: 4.75, quarterly: 6.3, half: 12.25, annual: 24.5 };
+    };
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  }
 
-      let cycles = mode === "monthly" ? 12 : mode === "quarterly" ? 4 : mode === "half" ? 2 : 1;
-      let returnPerCycle = amount * rate[mode] / 100;
-      let totalReturn = returnPerCycle * cycles;
-      let monthlyPayout = (amount + totalReturn) / 12;
+  const plans = [
+    {tier:'monthly', label:'Monthly Premium', amount: 49900}, // ₹499
+    {tier:'yearly', label:'Yearly Premium', amount: 499900} // ₹4999
+  ];
 
-      document.getElementById("result").innerHTML = `Return per cycle: ₹${returnPerCycle.toFixed(2)}<br>Total Return: ₹${totalReturn.toFixed(2)}`;
-      document.getElementById("monthlyNote").innerHTML = `Approx. monthly return: ₹${(totalReturn / 12).toFixed(2)}`;
-      document.getElementById("finalPayoutNote").innerHTML = `Total payout (capital + interest): ₹${(amount + totalReturn).toFixed(2)}\nMonthly: ₹${monthlyPayout.toFixed(2)}`;
-    }
-  </script>
-</body>
-</html>
+  return (
+    <div className="min-h-screen bg-gray-50 p-6 font-sans">
+      <header className="max-w-4xl mx-auto flex justify-between items-center py-6">
+        <h1 className="text-2xl font-bold">IncomePlus — Stock Calls & Analysis</h1>
+        <nav className="space-x-4">
+          {user ? (
+            <button onClick={doSignOut} className="px-3 py-2 rounded bg-red-600 text-white">Sign out</button>
+          ) : (
+            <a href="#auth" className="px-3 py-2 rounded bg-blue-600 text-white">Login / Join</a>
+          )}
+        </nav>
+      </header>
+
+      <main className="max-w-4xl mx-auto">
+        <section className="bg-white rounded p-6 shadow mb-6">
+          <h2 className="text-xl font-semibold">What we offer</h2>
+          <p className="mt-2">Daily technical calls, swing trades, and detailed weekly analysis. Free calls for everyone; premium members get exclusive multi-leg strategies, position sizing, and past performance reports.</p>
+        </section>
+
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div className="bg-white p-6 rounded shadow">
+            <h3 className="font-semibold text-lg">Free Signals</h3>
+            <ul className="mt-3 list-disc pl-5 text-sm">
+              <li>Top 1-2 daily setups</li>
+              <li>Short term intraday ideas</li>
+            </ul>
+          </div>
+          <div className="bg-white p-6 rounded shadow">
+            <h3 className="font-semibold text-lg">Premium</h3>
+            <ul className="mt-3 list-disc pl-5 text-sm">
+              <li>All trade ideas + risk management</li>
+              <li>Weekly performance report & P&L</li>
+              <li>One-on-one onboarding call</li>
+            </ul>
+            <div className="mt-4 space-x-2">
+              {plans.map(p=> (
+                <button key={p.tier} onClick={()=>startRazorpayCheckout(p)} className="px-3 py-2 rounded border">Subscribe {p.label.replace('Premium','')} — ₹{(p.amount/100).toLocaleString()}</button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="auth" className="bg-white p-6 rounded shadow mb-6">
+          <h3 className="font-semibold">Login / Signup (OTP)</h3>
+          {!user ? (
+            <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-2">
+              <div className="md:col-span-2">
+                <label className="block text-sm">Phone (with country code)</label>
+                <input value={phone} onChange={(e)=>setPhone(e.target.value)} placeholder='+919xxxxxxxxx' className="w-full border p-2 rounded" />
+              </div>
+              <div className="flex items-end">
+                <button onClick={sendOtp} className="px-3 py-2 rounded bg-green-600 text-white">Send OTP</button>
+              </div>
+              <div className="md:col-span-3 mt-2">
+                <label className="block text-sm">Enter OTP</label>
+                <input value={otp} onChange={(e)=>setOtp(e.target.value)} placeholder='123456' className="w-1/3 border p-2 rounded" />
+                <button onClick={verifyOtp} className="ml-3 px-3 py-2 rounded bg-blue-600 text-white">Verify</button>
+              </div>
+              <div id="recaptcha-container"></div>
+              <div className="md:col-span-3 text-sm text-gray-600 mt-2">{message}</div>
+            </div>
+          ) : (
+            <div>
+              <div>Signed in as: {user.phoneNumber || user.email || user.uid}</div>
+              <div className="mt-3">Membership: <strong>{memberTier || 'free'}</strong></div>
+            </div>
+          )}
+        </section>
+
+        <section className="bg-white p-6 rounded shadow mb-6">
+          <h3 className="font-semibold">Latest Calls</h3>
+          <div className="mt-3 space-y-3">
+            {calls.map(c=> (
+              <div key={c.id} className="p-3 border rounded">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <div className="font-semibold">{c.title}</div>
+                    <div className="text-sm text-gray-600">{c.type === 'premium' ? 'Premium' : 'Free'}</div>
+                  </div>
+                  <div>
+                    {c.type === 'premium' && memberTier !== 'premium' ? (
+                      <span className="text-sm text-red-600">Premium — subscribe to view</span>
+                    ) : (
+                      <div className="text-sm">{c.details}</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <footer className="text-center text-sm text-gray-500 mt-6">© {new Date().getFullYear()} IncomePlus — Powered by TRFSK Omkar Services Pvt. Ltd.</footer>
+      </main>
+
+      {/* Razorpay script loader */}
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    </div>
+  );
+}
+
+export default App;
+
+/*
+---------- END OF APP ----------
+
+Additional files you should add:
+- src/main.jsx (ReactDOM.render, BrowserRouter wrapper)
+- public/index.html
+- Tailwind setup (optional) or plain CSS
+- Small backend (Node/Express) to create Razorpay orders and to securely store/validate subscription status. Also use Firebase Admin SDK server-side to mint custom tokens if needed.
+
+If you'd like, I can:
+- Generate a full repo structure with working files (main.jsx, index.html, package.json, README) ready to copy into GitHub.
+- Create a Node/Express example for creating Razorpay orders and verifying webhooks.
+- Convert this into a WordPress + Elementor theme instead.
+
+Tell me which of the options you want next and I will create or push the files accordingly.
+*/
