@@ -1,39 +1,65 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 <head>
-  <meta charset='UTF-8'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IncomePlus - Stock Calls & Analysis</title>
-  <meta name='description' content='Free stock market calls, analysis and insights from IncomePlus. Join our Telegram for updates.'>
-  <link rel='canonical' href='https://incomeplus.in/'>
-  <meta property='og:title' content='IncomePlus - Stock Calls & Analysis'>
-  <meta property='og:description' content='Free stock calls and analysis. Join our Telegram for updates.'>
-  <meta property='og:type' content='website'>
-  <meta property='og:url' content='https://incomeplus.in/'>
-  <meta property='og:image' content='og-image.png'>
+  <meta name="description" content="Free stock market calls, analysis and insights from IncomePlus. Join our Telegram for updates.">
+  <link rel="canonical" href="https://incomeplus.in/">
+  <meta property="og:title" content="IncomePlus - Stock Calls & Analysis">
+  <meta property="og:description" content="Daily stock market calls and analysis. Join our Telegram channel for free.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://incomeplus.in/">
+  <meta property="og:image" content="og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="IncomePlus - Stock Calls & Analysis">
+  <meta name="twitter:description" content="Free stock market calls, analysis and insights. Join our Telegram channel.">
+  <meta name="twitter:image" content="og-image.png">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9fafb; color: #111; }
+    header { background: #0d47a1; color: #fff; padding: 2rem; text-align: center; }
+    header h1 { margin: 0; font-size: 2.5rem; }
+    header p { font-size: 1.2rem; margin-top: .5rem; }
+    section { padding: 2rem; max-width: 800px; margin: auto; }
+    h2 { color: #0d47a1; margin-bottom: 1rem; }
+    .call-box { background: #fff; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .telegram-btn { display: inline-block; padding: .75rem 1.5rem; background: #0088cc; color: #fff; border-radius: 6px; text-decoration: none; font-weight: bold; }
+    form { display: flex; flex-direction: column; gap: 1rem; }
+    input, textarea { padding: .75rem; border: 1px solid #ccc; border-radius: 6px; width: 100%; }
+    button { background: #0d47a1; color: #fff; padding: .75rem; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    button:hover { background: #08306b; }
+    footer { background: #111; color: #aaa; text-align: center; padding: 1.5rem; margin-top: 2rem; }
+  </style>
 </head>
 <body>
-  <header><h1>IncomePlus</h1><p>Stock Calls & Analysis</p></header>
-  <main>
-    <section>
-      <h2>Latest Stock Calls</h2>
-      <ul id='calls-list'>
-        <li>Demo Call: Buy XYZ at 100, Target 120, SL 95</li>
-      </ul>
-    </section>
-    <section>
-      <h2>Join Our Telegram</h2>
-      <a href='https://t.me/yourchannel' target='_blank'>Join Telegram Channel</a>
-    </section>
-    <section>
-      <h2>Contact Us</h2>
-      <form action='https://formspree.io/f/mwkajnzp' method='POST'>
-        <input type='email' name='email' placeholder='Your email'>
-        <textarea name='message' placeholder='Your message'></textarea>
-        <button type='submit'>Send</button>
-      </form>
-    </section>
-  </main>
-  <footer><p>© 2025 IncomePlus. Not financial advice.</p></footer>
+  <header>
+    <h1>IncomePlus</h1>
+    <p>Stock Calls & Analysis</p>
+  </header>
+
+  <section>
+    <h2>Latest Stock Calls</h2>
+    <div class="call-box">
+      <strong>Demo Call:</strong> Buy XYZ at 100, Target 120, SL 95
+    </div>
+  </section>
+
+  <section>
+    <h2>Join Our Telegram</h2>
+    <a href="https://t.me/yourtelegramlink" target="_blank" class="telegram-btn">Join Telegram Channel</a>
+  </section>
+
+  <section>
+    <h2>Contact Us</h2>
+    <form action="https://formspree.io/f/yourformid" method="POST">
+      <input type="email" name="email" placeholder="Your email" required>
+      <textarea name="message" placeholder="Your message" rows="5" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <footer>
+    © 2025 IncomePlus. Not financial advice.
+  </footer>
 </body>
 </html>
